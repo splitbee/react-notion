@@ -5,62 +5,60 @@
   caret-color: rgb(55, 53, 47);
 }
 
-.notion .red {
+.notion-red {
   color: rgb(224, 62, 62);
 }
-.notion .pink {
+.notion-pink {
   color: rgb(173, 26, 114);
 }
-.notion .blue {
+.notion-blue {
   color: rgb(11, 110, 153);
 }
-.notion .purple {
+.notion-purple {
   color: rgb(105, 64, 165);
 }
-.notion .teal {
+.notion-teal {
   color: rgb(15, 123, 108);
 }
-.notion .yellow {
+.notion-yellow {
   color: rgb(223, 171, 1);
 }
-.notion .orange {
+.notion-orange {
   color: rgb(217, 115, 13);
 }
-.notion .brown {
+.notion-brown {
   color: rgb(100, 71, 58);
 }
-.notion .gray {
+.notion-gray {
   color: rgb(155, 154, 151);
 }
-
-.notion .red_background {
+.notion-red_background {
   background-color: rgb(251, 228, 228);
 }
-.notion .pink_background {
+.notion-pink_background {
   background-color: rgb(244, 223, 235);
 }
-.notion .blue_background {
+.notion-blue_background {
   background-color: rgb(221, 235, 241);
 }
-.notion .purple_background {
+.notion-purple_background {
   background-color: rgb(234, 228, 242);
 }
-.notion .teal_background {
+.notion-teal_background {
   background-color: rgb(221, 237, 234);
 }
-.notion .yellow_background {
+.notion-yellow_background {
   background-color: rgb(251, 243, 219);
 }
-.notion .orange_background {
+.notion-orange_background {
   background-color: rgb(250, 235, 221);
 }
-.notion .brown_background {
+.notion-brown_background {
   background-color: rgb(233, 229, 227);
 }
-.notion .gray_background {
+.notion-gray_background {
   background-color: rgb(235, 236, 237);
 }
-
 .notion-h1 {
   font-weight: 600;
   font-size: 1.875em;
@@ -69,7 +67,6 @@
   margin-top: 1.4em;
   margin-bottom: 1px;
 }
-
 .notion-h2 {
   font-weight: 600;
   font-size: 1.5em;
@@ -79,7 +76,6 @@
   margin-top: 1.1em;
   margin-bottom: 1px;
 }
-
 .notion-h3 {
   font-weight: 600;
   font-size: 1.25em;
@@ -89,7 +85,6 @@
   margin-top: 1em;
   margin-bottom: 1px;
 }
-
 .notion-quote {
   white-space: pre-wrap;
   word-break: break-word;
@@ -98,12 +93,10 @@
   padding-right: 0.9em;
   font-size: 1.2em;
 }
-
 .notion-hr {
   margin: 6px 0px;
   border-color: rgba(55, 53, 47, 0.09);
 }
-
 .notion-column {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -132,7 +125,6 @@
 .notion-list-numbered {
   list-style-type: decimal;
 }
-
 .notion-list li {
   padding-left: 4px;
 }
@@ -145,11 +137,9 @@
   word-break: break-word;
   caret-color: rgb(55, 53, 47);
 }
-
 .notion-block {
   padding: 3px 2px;
 }
-
 .notion-row {
   display: flex;
 }

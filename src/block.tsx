@@ -35,7 +35,7 @@ export const applyDecorator = (properties: DecorationType[]) => {
             );
             break;
           case "h":
-            newItem = <span className={item[1]}>{newItem}</span>;
+            newItem = <span className={`notion-${item[1]}`}>{newItem}</span>;
         }
       });
     }
