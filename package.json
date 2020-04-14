@@ -1,0 +1,28 @@
+{
+  "name": "react-notion",
+  "version": "0.0.1",
+  "description": "A react renderer that can render Notion.so data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splitbee/react-notion.git"
+  },
+  "keywords": [
+    "notion",
+    "react",
+    "renderer"
+  ],
+  "author": {
+    "name": "Tobias Lins",
+    "email": "me@tobi.sh",
+    "url": "https://tobi.sh"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/splitbee/react-notion/issues"
+  },
+  "homepage": "https://github.com/splitbee/react-notion#readme"
+}
