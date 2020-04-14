@@ -3,75 +3,75 @@ import { LoadPageChunkData, DecorationType } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 
-// import './styles.css';
-
-export const applyDecorator = (properties: DecorationType[]) => {
+export const renderChildText = (properties: DecorationType[]) => {
+  if (!properties) return null;
   return properties.map((item, index) => {
-    let newItem: JSX.Element = <>{item[0]}</>;
+    let el: JSX.Element = <>{item[0]}</>;
     if (item.length !== 1) {
       item[1].forEach(item => {
         switch (item[0]) {
           case "b":
-            newItem = <b key={index}>{newItem}</b>;
+            el = <b key={index}>{el}</b>;
             break;
           case "i":
-            newItem = <em key={index}>{newItem}</em>;
+            el = <em key={index}>{el}</em>;
             break;
           case "s":
-            newItem = <s key={index}>{newItem}</s>;
+            el = <s key={index}>{el}</s>;
             break;
           case "a":
-            newItem = (
+            el = (
               <a className="notion-link" href={item[1]} key={index}>
-                {newItem}
+                {el}
               </a>
             );
             break;
           case "c":
-            newItem = (
+            el = (
               <code className="notion-inline-code" key={index}>
-                {newItem}
+                {el}
               </code>
             );
             break;
           case "h":
-            newItem = <span className={`notion-${item[1]}`}>{newItem}</span>;
+            el = <span className={`notion-${item[1]}`}>{el}</span>;
         }
       });
     }
-    return newItem;
+    return el;
   });
 };
 
-interface BlockRenderer {
+interface Block {
   block: LoadPageChunkData["recordMap"]["block"][""];
   level: number;
 }
 
-export const BlockRenderer: React.FC<BlockRenderer> = props => {
+export const Block: React.FC<Block> = props => {
   const { block } = props;
-  switch (block.value.type) {
+
+  switch (block?.value?.type) {
     case "page":
       return null;
     case "header":
       if (!block.value.properties) return null;
       return (
         <h1 className="notion-h1">
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </h1>
       );
     case "sub_header":
       if (!block.value.properties) return null;
       return (
         <h2 className="notion-h2">
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </h2>
       );
     case "sub_sub_header":
       if (!block.value.properties) return null;
       return (
         <h3 className="notion-h3">
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </h3>
       );
     case "column_list":
@@ -80,7 +80,7 @@ export const BlockRenderer: React.FC<BlockRenderer> = props => {
       if (!block.value.properties) return null;
       return (
         <blockquote className="notion-quote">
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </blockquote>
       );
     case "column":
@@ -93,7 +93,7 @@ export const BlockRenderer: React.FC<BlockRenderer> = props => {
       }
       return (
         <p className={`notion-text`}>
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </p>
       );
     case "bulleted_list":
@@ -101,7 +101,7 @@ export const BlockRenderer: React.FC<BlockRenderer> = props => {
       if (!block.value.properties) return null;
       return (
         <li className={``}>
-          <>{applyDecorator(block.value.properties.title)}</>
+          <>{renderChildText(block.value.properties.title)}</>
         </li>
       );
     case "image":
@@ -123,19 +123,19 @@ export const BlockRenderer: React.FC<BlockRenderer> = props => {
       break;
     }
     default:
-      console.log("Unsupported type " + block.value.type);
+      console.log("Unsupported type " + block?.value?.type);
       return <div />;
   }
   return null;
 };
 
-interface ChildRendererProps {
+interface ChildProps {
   blockMap: LoadPageChunkData["recordMap"]["block"];
   level: number;
   ids: string[];
 }
 
-export const ChildRenderer: React.FC<ChildRendererProps> = props => {
+export const Child: React.FC<ChildProps> = props => {
   const { ids, blockMap } = props;
 
   let idArray = [];
@@ -146,7 +146,8 @@ export const ChildRenderer: React.FC<ChildRendererProps> = props => {
     const currentId = ids[i];
     if (!(currentId in blockMap)) continue;
     const currentBlock = blockMap[currentId];
-    if (currentBlock.value.type === "bulleted_list") {
+
+    if (currentBlock?.value.type === "bulleted_list") {
       bulletArray.push(
         <NotionRenderer
           level={props.level + 1}
@@ -154,7 +155,7 @@ export const ChildRenderer: React.FC<ChildRendererProps> = props => {
           blockMap={blockMap}
         />
       );
-    } else if (currentBlock.value.type === "numbered_list") {
+    } else if (currentBlock?.value.type === "numbered_list") {
       orderedArray.push(
         <NotionRenderer
           level={props.level + 1}
@@ -162,7 +163,7 @@ export const ChildRenderer: React.FC<ChildRendererProps> = props => {
           blockMap={blockMap}
         />
       );
-    } else if (currentBlock.value.type === "column_list") {
+    } else if (currentBlock?.value.type === "column_list") {
       idArray.push(
         <div className="notion-row">
           <NotionRenderer
@@ -174,7 +175,7 @@ export const ChildRenderer: React.FC<ChildRendererProps> = props => {
       );
     } else if (currentBlock.value.type === "column") {
       const spacerWith = 46;
-      const spacerTotalWith = (idArray.length - 1) * spacerWith;
+      const spacerTotalWith = idArray.length * spacerWith;
       const width = `calc((100% - ${spacerTotalWith}px) * ${currentBlock.value.format.column_ratio})`;
       idArray.push(
         <>
@@ -243,16 +244,16 @@ export const NotionRenderer: React.FC<NotionProps> = props => {
   const currentBlock = props.blockMap[props.currentID];
 
   const renderChildren = !(
-    currentBlock.value.type === "page" && props.level > 0
+    currentBlock?.value?.type === "page" && props.level > 0
   );
 
   return (
     <>
-      <BlockRenderer level={props.level} block={currentBlock} />
-      {currentBlock.value.content && renderChildren && (
-        <ChildRenderer
+      <Block level={props.level} block={currentBlock} />
+      {currentBlock?.value?.content && renderChildren && (
+        <Child
           level={props.level}
-          ids={currentBlock.value.content}
+          ids={currentBlock?.value?.content}
           blockMap={props.blockMap}
         />
       )}
