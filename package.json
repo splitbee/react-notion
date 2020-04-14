@@ -1,28 +1,57 @@
 {
-  "name": "react-notion",
-  "version": "0.0.1",
-  "description": "A react renderer that renders Notion.so data",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/splitbee/react-notion.git"
-  },
-  "keywords": [
-    "notion",
-    "react",
-    "renderer"
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
   ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
   "author": {
     "name": "Tobias Lins",
     "email": "me@tobi.sh",
     "url": "https://tobi.sh"
   },
-  "license": "MIT",
+  "peerDependencies": {
+    "prismjs": "^1.20.0",
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {},
   "bugs": {
     "url": "https://github.com/splitbee/react-notion/issues"
   },
-  "homepage": "https://github.com/splitbee/react-notion#readme"
+  "homepage": "https://github.com/splitbee/react-notion#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splitbee/react-notion.git"
+  },
+  "name": "react-notion",
+  "module": "dist/react-notion.esm.js",
+  "devDependencies": {
+    "@types/prismjs": "^1.16.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "husky": "^4.2.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "tsdx": "^0.13.2",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  }
 }
