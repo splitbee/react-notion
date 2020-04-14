@@ -1,13 +1,15 @@
 import * as React from "react";
 import { CSSProperties } from "react";
-import { BlockType } from "types";
+import { BlockType, ContentValueType } from "../types";
+
+const types = ["video", "image", "embed"];
 
 const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
-  const { value } = block;
-
-  if (block.value.type === "embed") {
+  const value = block.value as ContentValueType;
+  const type = block.value.type;
+  if (types.includes(type)) {
     const { id } = value;
-    const format = block.value.format;
+    const format = (block.value as any).format;
     const {
       block_width,
       block_height,
@@ -15,7 +17,7 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
       block_aspect_ratio
     } = format;
 
-    const isImage = value.type === "image";
+    const isImage = type === "image";
     const Comp = isImage ? "img" : "video";
 
     const useWrapper = block_aspect_ratio && !block_height;
@@ -46,7 +48,7 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
         <Comp
           key={!useWrapper ? id : undefined}
           src={`https://notion.so/image/${encodeURIComponent(
-            block.value.properties.source[0][0]
+            value.properties.source[0][0]
           )}`}
           controls={!isImage}
           alt={`An ${isImage ? "image" : "video"} from Splitbee`}

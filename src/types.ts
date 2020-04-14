@@ -197,8 +197,8 @@ export type BlockValueType =
   | ColumnListValueType
   | ColumnValueType
   | QuoteValueType
-  | ImageValueType
   | CodeValueType
+  | ImageValueType
   | VideoValueType
   | EmbedValueType;
 
