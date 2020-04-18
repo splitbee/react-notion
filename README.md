@@ -49,6 +49,7 @@ export default Page;
 - [x] Images
 - [x] Quotes
 - [x] Bulleted Lists
+- [x] Numbered Lists
 - [x] Links
 - [x] Columns
 - [x] iFrames
@@ -60,7 +61,6 @@ Missing
 - [ ] Checkboxes
 - [ ] Callouts
 - [ ] Image Captions
-- [ ] Numbered Lists
 - [ ] Toggle Lists
 
 
