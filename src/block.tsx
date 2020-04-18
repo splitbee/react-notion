@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LoadPageChunkData, DecorationType } from "./types";
+import { DecorationType, BlockMapType, BlockType } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 
@@ -43,7 +43,7 @@ export const renderChildText = (properties: DecorationType[]) => {
 };
 
 interface Block {
-  block: LoadPageChunkData["recordMap"]["block"][""];
+  block: BlockType;
   level: number;
 }
 
@@ -130,7 +130,7 @@ export const Block: React.FC<Block> = props => {
 };
 
 interface ChildProps {
-  blockMap: LoadPageChunkData["recordMap"]["block"];
+  blockMap: BlockMapType;
   level: number;
   ids: string[];
 }
@@ -235,26 +235,29 @@ export const Child: React.FC<ChildProps> = props => {
 };
 
 interface NotionProps {
-  blockMap: LoadPageChunkData["recordMap"]["block"];
-  currentID: string;
-  level: number;
+  blockMap: BlockMapType;
+  currentID?: string;
+  level?: number;
 }
 
-export const NotionRenderer: React.FC<NotionProps> = props => {
-  const currentBlock = props.blockMap[props.currentID];
+export const NotionRenderer: React.FC<NotionProps> = ({
+  level = 0,
+  currentID,
+  blockMap
+}) => {
+  const id = currentID || Object.keys(blockMap)[0];
+  const currentBlock = blockMap[id];
 
-  const renderChildren = !(
-    currentBlock?.value?.type === "page" && props.level > 0
-  );
+  const renderChildren = !(currentBlock?.value?.type === "page" && level > 0);
 
   return (
     <>
-      <Block level={props.level} block={currentBlock} />
+      <Block level={level} block={currentBlock} />
       {currentBlock?.value?.content && renderChildren && (
         <Child
-          level={props.level}
+          level={level}
           ids={currentBlock?.value?.content}
-          blockMap={props.blockMap}
+          blockMap={blockMap}
         />
       )}
     </>

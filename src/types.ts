@@ -160,7 +160,7 @@ export interface ContentValueType extends BaseValueType {
     block_aspect_ratio: number;
     block_preserve_scale: boolean;
   };
-  file_ids: string[];
+  file_ids?: string[];
 }
 
 interface ImageValueType extends ContentValueType {
@@ -216,9 +216,8 @@ export interface NotionUserType {
     given_name: string;
     family_name: string;
     profile_photo: string;
-    onboarding_complete: boolean;
-    mobile_onboarding_complete: boolean;
-    clipper_onboarding_complete: boolean;
+    onboarding_completed: boolean;
+    mobile_onboarding_completed: boolean;
   };
 }
 
@@ -230,6 +229,8 @@ export interface RecordMapType {
     [key: string]: NotionUserType;
   };
 }
+
+export type BlockMapType = LoadPageChunkData["recordMap"]["block"];
 
 export interface LoadPageChunkData {
   recordMap: RecordMapType;

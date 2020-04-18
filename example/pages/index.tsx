@@ -1,12 +1,13 @@
-import { NotionRenderer } from "react-notion";
+import { NotionRenderer, LoadPageChunkData } from "react-notion";
 import pageData from "../mock/page.json";
+
+const {
+  recordMap: { block: blockMap }
+} = pageData as LoadPageChunkData;
+
 const Home = () => (
-  <div style={{ maxWidth: 760, marginLeft: "auto", marginRight: "auto" }}>
-    <NotionRenderer
-      level={0}
-      blockMap={(pageData.recordMap.block as any) || []}
-      currentID={"79c956db-2466-4214-8f15-fcfbf12b14d3"}
-    />
+  <div style={{ maxWidth: 760, margin: "0 auto" }}>
+    <NotionRenderer blockMap={blockMap} />
   </div>
 );
 
