@@ -6,8 +6,11 @@ Renders your Notion blocks with ease.
 
 ```bash
 npm install react-notion
+```
 
-// if you use code blocks with syntax highlighting
+If you use code blocks and want syntax highlighting, install `primsjs`.
+
+```bash
 npm install prismjs
 ```
 
