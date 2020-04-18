@@ -1,2 +1,2 @@
-export { NotionRenderer } from "./block";
+export { NotionRenderer } from "./renderer";
 export * from "./types";

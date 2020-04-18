@@ -1,265 +1,180 @@
 import * as React from "react";
-import { DecorationType, BlockMapType, BlockType } from "./types";
+import { DecorationType, BlockType, ContentValueType } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 
 export const renderChildText = (properties: DecorationType[]) => {
   if (!properties) return null;
-  return properties.map((item, index) => {
-    let el: JSX.Element = <>{item[0]}</>;
-    if (item.length !== 1) {
-      item[1].forEach(item => {
-        switch (item[0]) {
-          case "b":
-            el = <b key={index}>{el}</b>;
-            break;
-          case "i":
-            el = <em key={index}>{el}</em>;
-            break;
-          case "s":
-            el = <s key={index}>{el}</s>;
-            break;
-          case "a":
-            el = (
-              <a className="notion-link" href={item[1]} key={index}>
-                {el}
-              </a>
-            );
-            break;
-          case "c":
-            el = (
-              <code className="notion-inline-code" key={index}>
-                {el}
-              </code>
-            );
-            break;
-          case "h":
-            el = <span className={`notion-${item[1]}`}>{el}</span>;
-        }
-      });
+  return properties.map(([text, decorations], index) => {
+    if (!decorations) {
+      return text;
     }
-    return el;
+
+    return decorations.map(decorator => {
+      switch (decorator[0]) {
+        case "h":
+          return (
+            <span key={index} className={`notion-${decorator[1]}`}>
+              {text}
+            </span>
+          );
+        case "c":
+          return (
+            <code key={index} className="notion-inline-code">
+              {text}
+            </code>
+          );
+        case "b":
+          return <b key={index}>{text}</b>;
+        case "i":
+          return <em key={index}>{text}</em>;
+        case "s":
+          return <s key={index}>{text}</s>;
+        case "a":
+          return (
+            <a className="notion-link" href={decorator[1]} key={index}>
+              {text}
+            </a>
+          );
+
+        default:
+          return <React.Fragment key={index}>text</React.Fragment>;
+      }
+    });
   });
 };
 
 interface Block {
   block: BlockType;
+  parentBlock: BlockType;
   level: number;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block } = props;
-
-  switch (block?.value?.type) {
+  const { block, parentBlock, children } = props;
+  const blockValue = block?.value;
+  switch (blockValue.type) {
     case "page":
-      return null;
+      return <>{children}</>;
     case "header":
-      if (!block.value.properties) return null;
+      if (!blockValue.properties) return null;
       return (
         <h1 className="notion-h1">
-          <>{renderChildText(block.value.properties.title)}</>
+          {renderChildText(blockValue.properties.title)}
         </h1>
       );
     case "sub_header":
-      if (!block.value.properties) return null;
+      if (!blockValue.properties) return null;
       return (
         <h2 className="notion-h2">
-          <>{renderChildText(block.value.properties.title)}</>
+          {renderChildText(blockValue.properties.title)}
         </h2>
       );
     case "sub_sub_header":
-      if (!block.value.properties) return null;
+      if (!blockValue.properties) return null;
       return (
         <h3 className="notion-h3">
-          <>{renderChildText(block.value.properties.title)}</>
+          {renderChildText(blockValue.properties.title)}
         </h3>
       );
-    case "column_list":
-      return null;
-    case "quote":
-      if (!block.value.properties) return null;
-      return (
-        <blockquote className="notion-quote">
-          <>{renderChildText(block.value.properties.title)}</>
-        </blockquote>
-      );
-    case "column":
-      return null;
     case "divider":
       return <hr />;
     case "text":
-      if (!block.value.properties) {
+      if (!blockValue.properties) {
         return <p style={{ height: "1rem" }}> </p>;
       }
       return (
         <p className={`notion-text`}>
-          <>{renderChildText(block.value.properties.title)}</>
+          {renderChildText(blockValue.properties.title)}
         </p>
       );
     case "bulleted_list":
     case "numbered_list":
-      if (!block.value.properties) return null;
-      return (
-        <li className={``}>
-          <>{renderChildText(block.value.properties.title)}</>
-        </li>
-      );
+      const isTopLevel = block.value.type !== parentBlock.value.type;
+
+      const wrapList = (content: React.ReactNode) =>
+        blockValue.type === "bulleted_list" ? (
+          <ul className="notion-list notion-list-disc">{content}</ul>
+        ) : (
+          <ol className="notion-list notion-list-numbered">{content}</ol>
+        );
+
+      let output: JSX.Element | null = null;
+
+      if (blockValue.content) {
+        output = (
+          <>
+            {blockValue.properties && (
+              <li>{renderChildText(blockValue.properties.title)}</li>
+            )}
+            {wrapList(children)}
+          </>
+        );
+      } else {
+        output = blockValue.properties ? (
+          <li>{renderChildText(blockValue.properties.title)}</li>
+        ) : null;
+      }
+
+      return isTopLevel ? wrapList(output) : output;
+
     case "image":
     case "embed":
     case "video":
+      const value = block.value as ContentValueType;
+
       return (
         <div className="notion-asset-wrapper">
           <Asset block={block} />
+          {value.properties.caption && (
+            <div className="notion-image-caption">
+              {renderChildText(value.properties.caption)}
+            </div>
+          )}
         </div>
       );
     case "code": {
-      if (block.value.properties.title) {
-        const content = block.value.properties.title[0][0];
-        const language = block.value.properties.language[0][0];
+      if (blockValue.properties.title) {
+        const content = blockValue.properties.title[0][0];
+        const language = blockValue.properties.language[0][0];
         return (
-          <Code key={block.value.id} language={language || ""} code={content} />
+          <Code key={blockValue.id} language={language || ""} code={content} />
         );
       }
       break;
     }
+    case "column_list":
+      return <div className="notion-row">{children}</div>;
+    case "column":
+      const spacerWith = 46;
+      const ratio = blockValue.format.column_ratio;
+      const columns = Number((1 / ratio).toFixed(0));
+      const spacerTotalWith = (columns - 1) * spacerWith;
+      const width = `calc((100% - ${spacerTotalWith}px) * ${ratio})`;
+      return (
+        <>
+          <div className="notion-column" style={{ width }}>
+            {children}
+          </div>
+          <div className="notion-spacer" style={{ width: spacerWith }} />
+        </>
+      );
+    case "callout":
+      return (
+        <div
+          className={`notion-callout notion-${blockValue.format.block_color}_co`}
+        >
+          <div>{blockValue.format.page_icon}</div>
+          <div className="notion-callout-text">
+            {renderChildText(blockValue.properties.title)}
+          </div>
+        </div>
+      );
     default:
-      console.log("Unsupported type " + block?.value?.type);
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Unsupported type " + block?.value?.type);
+      }
       return <div />;
   }
   return null;
-};
-
-interface ChildProps {
-  blockMap: BlockMapType;
-  level: number;
-  ids: string[];
-}
-
-export const Child: React.FC<ChildProps> = props => {
-  const { ids, blockMap } = props;
-
-  let idArray = [];
-  let bulletArray = [];
-  let orderedArray = [];
-
-  for (let i = 0; i < ids.length; i++) {
-    const currentId = ids[i];
-    if (!(currentId in blockMap)) continue;
-    const currentBlock = blockMap[currentId];
-
-    if (currentBlock?.value.type === "bulleted_list") {
-      bulletArray.push(
-        <NotionRenderer
-          level={props.level + 1}
-          currentID={ids[i]}
-          blockMap={blockMap}
-        />
-      );
-    } else if (currentBlock?.value.type === "numbered_list") {
-      orderedArray.push(
-        <NotionRenderer
-          level={props.level + 1}
-          currentID={ids[i]}
-          blockMap={blockMap}
-        />
-      );
-    } else if (currentBlock?.value.type === "column_list") {
-      idArray.push(
-        <div className="notion-row">
-          <NotionRenderer
-            level={props.level + 1}
-            currentID={currentId}
-            blockMap={blockMap}
-          />
-        </div>
-      );
-    } else if (currentBlock.value.type === "column") {
-      const spacerWith = 46;
-      const spacerTotalWith = idArray.length * spacerWith;
-      const width = `calc((100% - ${spacerTotalWith}px) * ${currentBlock.value.format.column_ratio})`;
-      idArray.push(
-        <>
-          <div className="notion-column" style={{ width }}>
-            <NotionRenderer
-              level={props.level + 1}
-              currentID={ids[i]}
-              blockMap={blockMap}
-            />
-          </div>
-          {idArray.length !== ids.length - 1 && <div style={{ width: 46 }} />}
-        </>
-      );
-    } else {
-      if (bulletArray.length > 0) {
-        idArray.push(
-          <ul className="notion-list notion-list-disc">{bulletArray}</ul>
-        );
-        bulletArray = [];
-      }
-      if (orderedArray.length > 0) {
-        idArray.push(
-          <ol className="notion-list notion-list-numbered" key={i}>
-            {orderedArray}
-          </ol>
-        );
-        orderedArray = [];
-      }
-
-      idArray.push(
-        <div className="notion-block" key={i}>
-          <NotionRenderer
-            level={props.level + 1}
-            currentID={ids[i]}
-            blockMap={blockMap}
-          />
-        </div>
-      );
-    }
-  }
-
-  if (bulletArray.length > 0) {
-    idArray.push(
-      <ul className="notion-list notion-list-disc" key={idArray.length}>
-        {bulletArray}
-      </ul>
-    );
-  }
-  if (orderedArray.length > 0) {
-    idArray.push(
-      <ol className="notion-list notion-list-numbered " key={idArray.length}>
-        {orderedArray}
-      </ol>
-    );
-  }
-  return <>{idArray}</>;
-};
-
-interface NotionProps {
-  blockMap: BlockMapType;
-  currentID?: string;
-  level?: number;
-}
-
-export const NotionRenderer: React.FC<NotionProps> = ({
-  level = 0,
-  currentID,
-  blockMap
-}) => {
-  const id = currentID || Object.keys(blockMap)[0];
-  const currentBlock = blockMap[id];
-
-  const renderChildren = !(currentBlock?.value?.type === "page" && level > 0);
-
-  return (
-    <>
-      <Block level={level} block={currentBlock} />
-      {currentBlock?.value?.content && renderChildren && (
-        <Child
-          level={level}
-          ids={currentBlock?.value?.content}
-          blockMap={blockMap}
-        />
-      )}
-    </>
-  );
 };

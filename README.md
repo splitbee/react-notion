@@ -31,16 +31,14 @@ const Page = ({ page }) => {
 
   return (
     <div className="notion" style={{ maxWidth: 768, color: "rgb(55, 53, 47)" }}>
-      <NotionRenderer
-        level={0}
-        blockMap={page.blocks || []}
-        currentID={page.id}
-      />
+      <NotionRenderer blockMap={blockMap} />
     </div>
   );
 };
 export default Page;
 ```
+
+Example Next.JS using react-notion can be found in folder `/example`
 
 ## Currently supported block types:
 
@@ -55,13 +53,10 @@ export default Page;
 - [x] iFrames
 - [x] Videos
 - [x] Divider
+- [x] Callouts
+- [x] Image Captions
 
 Missing
 
 - [ ] Checkboxes
-- [ ] Callouts
-- [ ] Image Captions
 - [ ] Toggle Lists
-
-
-Thanks for the prior of work by ![samwightt](https://github.com/samwightt) (child rendering algorithm)

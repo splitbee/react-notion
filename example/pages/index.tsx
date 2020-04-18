@@ -6,7 +6,14 @@ const {
 } = pageData as LoadPageChunkData;
 
 const Home = () => (
-  <div style={{ maxWidth: 760, margin: "0 auto" }}>
+  <div
+    style={{
+      maxWidth: 708,
+      margin: "0 auto",
+      color: "rgb(55, 53, 47)",
+      fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"`
+    }}
+  >
     <NotionRenderer blockMap={blockMap} />
   </div>
 );

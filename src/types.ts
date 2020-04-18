@@ -147,9 +147,21 @@ interface ColumnValueType extends BaseValueType {
   };
 }
 
+interface CalloutValueType extends BaseValueType {
+  type: "callout";
+  format: {
+    page_icon: string;
+    block_color: ColorType;
+  };
+  properties: {
+    title: DecorationType[];
+  };
+}
+
 export interface ContentValueType extends BaseValueType {
   properties: {
     source: string[][];
+    caption?: DecorationType[];
   };
   format: {
     block_width: number;
@@ -200,7 +212,8 @@ export type BlockValueType =
   | CodeValueType
   | ImageValueType
   | VideoValueType
-  | EmbedValueType;
+  | EmbedValueType
+  | CalloutValueType;
 
 export interface BlockType {
   role: string;
@@ -221,16 +234,16 @@ export interface NotionUserType {
   };
 }
 
+export type BlockMapType = {
+  [key: string]: BlockType;
+};
+
 export interface RecordMapType {
-  block: {
-    [key: string]: BlockType;
-  };
+  block: BlockMapType;
   notion_user: {
     [key: string]: NotionUserType;
   };
 }
-
-export type BlockMapType = LoadPageChunkData["recordMap"]["block"];
 
 export interface LoadPageChunkData {
   recordMap: RecordMapType;

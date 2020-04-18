@@ -59,6 +59,39 @@
 .notion-gray_background {
   background-color: rgb(235, 236, 237);
 }
+.notion-red_background_co {
+  background-color: rgb(251, 228, 228, 0.3);
+}
+.notion-pink_background_co {
+  background-color: rgb(244, 223, 235, 0.3);
+}
+.notion-blue_background_co {
+  background-color: rgb(221, 235, 241, 0.3);
+}
+.notion-purple_background_co {
+  background-color: rgb(234, 228, 242, 0.3);
+}
+.notion-teal_background_co {
+  background-color: rgb(221, 237, 234, 0.3);
+}
+.notion-yellow_background_co {
+  background-color: rgb(251, 243, 219, 0.3);
+}
+.notion-orange_background_co {
+  background-color: rgb(250, 235, 221, 0.3);
+}
+.notion-brown_background_co {
+  background-color: rgb(233, 229, 227, 0.3);
+}
+.notion-gray_background_co {
+  background-color: rgb(235, 236, 237, 0.3);
+}
+h1,
+h2,
+h3 {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
 .notion-h1 {
   font-weight: 600;
   font-size: 1.875em;
@@ -66,6 +99,9 @@
   color: inherit;
   margin-top: 1.4em;
   margin-bottom: 1px;
+}
+.notion-h1:first-child {
+  margin-top: 0px;
 }
 .notion-h2 {
   font-weight: 600;
@@ -115,22 +151,40 @@
 }
 
 .notion-list {
-  margin-left: 24px;
-  margin-right: 10px;
+  margin: 0;
+  margin-block-start: 0.6em;
+  margin-block-end: 0.6em;
 }
 
 .notion-list-disc {
   list-style-type: disc;
+  padding-inline-start: 1.7em;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .notion-list-numbered {
   list-style-type: decimal;
+  padding-inline-start: 1.6em;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-.notion-list li {
-  padding-left: 4px;
+
+.notion-list-disc li {
+  padding-left: 0.1em;
 }
+
+.notion-list-numbered li {
+  padding-left: 0.2em;
+}
+
+li {
+  padding: 6px 0px;
+}
+
 .notion-asset-wrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 .notion-text {
   white-space: pre-wrap;
@@ -142,4 +196,31 @@
 }
 .notion-row {
   display: flex;
+}
+.notion-spacer:last-child {
+  display: none;
+}
+.notion-image-caption {
+  padding: 6px 0px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  caret-color: rgb(55, 53, 47);
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(55, 53, 47, 0.6);
+}
+
+.notion-callout {
+  padding: 16px 16px 16px 12px;
+  display: flex;
+  width: 100%;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  align-items: center;
+  box-sizing: border-box;
+}
+.notion-callout-text {
+  margin-left: 8px;
 }
