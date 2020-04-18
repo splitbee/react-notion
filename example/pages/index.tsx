@@ -7,6 +7,7 @@ const {
 
 const Home = () => (
   <div
+    className="notion"
     style={{
       maxWidth: 708,
       margin: "0 auto",

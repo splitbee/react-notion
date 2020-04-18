@@ -5,6 +5,15 @@
   caret-color: rgb(55, 53, 47);
 }
 
+.notion > * {
+  padding: 3px 0px;
+}
+
+* {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
 .notion-red {
   color: rgb(224, 62, 62);
 }
@@ -185,6 +194,8 @@ li {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-top: 2px;
+  margin-bottom: 0.5em;
 }
 .notion-text {
   white-space: pre-wrap;
@@ -223,4 +234,14 @@ li {
 }
 .notion-callout-text {
   margin-left: 8px;
+}
+.notion-code {
+  padding: 30px 16px 30px 20px;
+  margin: 4px 0;
+  tab-size: 2;
+  font-size: 85%;
+  display: block;
+  background: rgb(247, 246, 243);
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
 }
