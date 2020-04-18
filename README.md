@@ -45,7 +45,7 @@ export default Page;
 - [x] Headings
 - [x] Images
 - [x] Quotes
-- [x] Lists
+- [x] Bulleted Lists
 - [x] Links
 - [x] Columns
 - [x] iFrames
@@ -55,5 +55,10 @@ export default Page;
 Missing
 
 - [ ] Checkboxes
+- [ ] Callouts
+- [ ] Image Captions
+- [ ] Numbered Lists
+- [ ] Toggle Lists
+
 
 Thanks for the prior of work by ![samwightt](https://github.com/samwightt) (child rendering algorithm)
