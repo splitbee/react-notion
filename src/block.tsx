@@ -159,6 +159,13 @@ export const Block: React.FC<Block> = props => {
           <div className="notion-spacer" style={{ width: spacerWith }} />
         </>
       );
+    case "quote":
+      if (!blockValue.properties) return null;
+      return (
+        <blockquote className="notion-quote">
+          {renderChildText(blockValue.properties.title)}
+        </blockquote>
+      );
     case "callout":
       return (
         <div
