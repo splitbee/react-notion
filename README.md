@@ -1,4 +1,4 @@
-![react-notion](https://user-images.githubusercontent.com/1440854/79683820-e4fa4400-822c-11ea-9ffb-f4d185b57ca8.png)
+![react-notion](https://user-images.githubusercontent.com/1440854/79684011-6c948280-822e-11ea-9e23-1644903796fb.png)
 
 An (unofficial) React renderer for Notion pages. It is written in TypeScript. Use it for blogs, documentations or personal sites, while we wait for the official API.
 
