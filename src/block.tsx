@@ -55,7 +55,7 @@ export const Block: React.FC<Block> = props => {
   const blockValue = block?.value;
   switch (blockValue.type) {
     case "page":
-      return <>{children}</>;
+      return <div className="notion">{children}</div>;
     case "header":
       if (!blockValue.properties) return null;
       return (
