@@ -211,6 +211,16 @@ li {
 .notion-spacer:last-child {
   display: none;
 }
+
+.notion-image-inset {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 .notion-image-caption {
   padding: 6px 0px;
   white-space: pre-wrap;
