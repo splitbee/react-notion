@@ -48,9 +48,10 @@ Missing
 - [ ] Checkboxes
 - [ ] Toggle Lists
 
-## Detailed Guide
+## Sites using react-notion
 
-Can be found on the Splitbee Blog - [Notion as a CMS using Next.JS](https://splitbee.io/blog/notion-as-cms-using-nextjs)
+* [PS Tunnel](https://pstunnel.com/blog)
+* [Splitbee](https://splitbee.io/blog)
 
 ## Credits
 
