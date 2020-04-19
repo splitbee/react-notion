@@ -5,42 +5,42 @@ import Code from "./components/code";
 
 export const renderChildText = (properties: DecorationType[]) => {
   if (!properties) return null;
-  return properties.map(([text, decorations], index) => {
+  return properties.map(([text, decorations], i) => {
     if (!decorations) {
       return text;
     }
 
-    return decorations.map(decorator => {
+    return decorations.reduce((element, decorator) => {
       switch (decorator[0]) {
         case "h":
           return (
-            <span key={index} className={`notion-${decorator[1]}`}>
-              {text}
+            <span key={i} className={`notion-${decorator[1]}`}>
+              {element}
             </span>
           );
         case "c":
           return (
-            <code key={index} className="notion-inline-code">
-              {text}
+            <code key={i} className="notion-inline-code">
+              {element}
             </code>
           );
         case "b":
-          return <b key={index}>{text}</b>;
+          return <b key={i}>{element}</b>;
         case "i":
-          return <em key={index}>{text}</em>;
+          return <em key={i}>{element}</em>;
         case "s":
-          return <s key={index}>{text}</s>;
+          return <s key={i}>{element}</s>;
         case "a":
           return (
-            <a className="notion-link" href={decorator[1]} key={index}>
-              {text}
+            <a className="notion-link" href={decorator[1]} key={i}>
+              {element}
             </a>
           );
 
         default:
-          return <React.Fragment key={index}>text</React.Fragment>;
+          return <React.Fragment key={i}>{element}</React.Fragment>;
       }
-    });
+    }, <>{text}</>);
   });
 };
 
