@@ -17,7 +17,7 @@ _This packages doesn't handle the communication with the API._
 
 🎨 **Custom Styles** – Styles are easily adaptable. Optional styles included
 
-_\* First Meaningful Paint compared to an example hosted on [ZEIT now](https://zeit.co/now)._
+_\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [ZEIT now](https://zeit.co/now)._
 
 ## Install
 
@@ -27,7 +27,7 @@ npm install react-notion
 
 ## How to use
 
-#### Minimal Example
+### Minimal Example
 
 We can store the API response in a `.json` file and import it.
 
@@ -49,7 +49,7 @@ export default () => (
 
 A working example can be found inside the `example` directory.
 
-#### Next.js Example
+### Next.js Example
 
 In this example we use [Next.js](https://github.com/zeit/next.js) for SSG. We use [notionapi-agent](https://github.com/dragonman225/notionapi-agent) to fetch data from the API.
 
