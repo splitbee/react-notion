@@ -218,6 +218,7 @@ h3 {
   background: rgb(247, 246, 243);
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
     monospace;
+  box-sizing: border-box;
 }
 
 .notion-column {
