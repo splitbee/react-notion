@@ -10,8 +10,11 @@ _This packages doesn't handle the communication with the API._
 ## Features
 
 ⚡️ **Fast** – Up to 10x faster than Notion\*
+
 🎯 **Precise** – Results are _almost_ identical
+
 🔮 **Code Highlighting** – Automatic code highlighting with [prismjs](https://prismjs.com/)
+
 🎨 **Custom Styles** – Styles are easily adaptable. Optional styles included
 
 _\* First Meaningful Paint compared to an example hosted on [ZEIT now](https://zeit.co/now)._
@@ -95,7 +98,7 @@ List of pages that implement this library.
 
 ## Supported Blocks
 
-Most common block types are supported. We happily accept new pull requests to add support for the missing blocks.
+Most common block types are supported. We happily accept pull requests to add support for the missing blocks.
 
 | Block Type    | Supported  | Notes             |
 | ------------- | ---------- | ----------------- |
