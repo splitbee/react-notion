@@ -4,13 +4,12 @@ import Asset from "./components/asset";
 import Code from "./components/code";
 
 export const renderChildText = (properties: DecorationType[]) => {
-  if (!properties) return null;
   return properties.map(([text, decorations], i) => {
     if (!decorations) {
-      return text;
+      return <React.Fragment key={i}>{text}</React.Fragment>;
     }
 
-    return decorations.reduce((element, decorator) => {
+    return decorations.reduceRight((element, decorator) => {
       switch (decorator[0]) {
         case "h":
           return (
@@ -78,7 +77,7 @@ export const Block: React.FC<Block> = props => {
         </h3>
       );
     case "divider":
-      return <hr />;
+      return <hr className="notion-hr" />;
     case "text":
       if (!blockValue.properties) {
         return <p style={{ height: "1rem" }}> </p>;
@@ -124,14 +123,17 @@ export const Block: React.FC<Block> = props => {
       const value = block.value as ContentValueType;
 
       return (
-        <div className="notion-asset-wrapper">
+        <figure
+          className="notion-asset-wrapper"
+          style={{ width: value.format.block_width }}
+        >
           <Asset block={block} />
           {value.properties.caption && (
-            <div className="notion-image-caption">
+            <figcaption className="notion-image-caption">
               {renderChildText(value.properties.caption)}
-            </div>
+            </figcaption>
           )}
-        </div>
+        </figure>
       );
     case "code": {
       if (blockValue.properties.title) {

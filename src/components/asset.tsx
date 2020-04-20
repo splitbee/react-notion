@@ -1,5 +1,4 @@
 import * as React from "react";
-import { CSSProperties } from "react";
 import { BlockType, ContentValueType } from "../types";
 
 const types = ["video", "image", "embed"];
@@ -14,26 +13,24 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
 
   const format = value.format;
   const {
-    block_width,
-    block_height,
     display_source,
-    block_aspect_ratio
+    block_aspect_ratio,
+    block_height,
+    block_width
   } = format;
 
-  const isImage = type === "image";
-
-  const style: CSSProperties = {
-    maxWidth: "100%",
-    border: "none",
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: block_width,
-    ...(!isImage && { height: block_height })
-  };
-
-  if (type === "embed") {
-    return <iframe style={style} src={display_source} />;
+  if (type === "embed" || type === "video") {
+    return (
+      <div
+        style={{
+          paddingBottom: `${(block_aspect_ratio || block_height / block_width) *
+            100}%`,
+          position: "relative"
+        }}
+      >
+        <iframe className="notion-image-inset" src={display_source} />
+      </div>
+    );
   }
 
   const src = `https://notion.so/image/${encodeURIComponent(
@@ -46,7 +43,6 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
       return (
         <div
           style={{
-            ...style,
             paddingBottom: `${block_aspect_ratio * 100}%`,
             position: "relative"
           }}
@@ -55,12 +51,8 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
         </div>
       );
     } else {
-      return <img style={style} alt={caption} src={src} />;
+      return <img alt={caption} src={src} />;
     }
-  }
-
-  if (type === "video") {
-    return <video style={style} src={src} />;
   }
 
   return null;

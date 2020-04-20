@@ -9,7 +9,7 @@
   padding: 3px 0px;
 }
 
-* {
+.notion * {
   margin-block-start: 0px;
   margin-block-end: 0px;
 }
@@ -134,21 +134,22 @@ h3 {
   white-space: pre-wrap;
   word-break: break-word;
   border-left: 3px solid currentcolor;
-  padding-left: 0.9em;
-  padding-right: 0.9em;
+  padding: 0.2em 0.9em;
+  margin: 0;
   font-size: 1.2em;
 }
 .notion-hr {
   margin: 6px 0px;
+  padding: 0;
+  border-top: none;
   border-color: rgba(55, 53, 47, 0.09);
 }
-.notion-column {
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
 .notion-link {
+  color: inherit;
   text-decoration: underline;
+  text-decoration-color: inherit;
 }
+
 .notion-inline-code {
   color: #eb5757;
   padding: 0.2em 0.4em;
@@ -186,17 +187,19 @@ h3 {
   padding-left: 0.2em;
 }
 
-li {
+.notion-list li {
   padding: 6px 0px;
 }
 
 .notion-asset-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 2px;
-  margin-bottom: 0.5em;
+  margin: 2px auto 0.5rem;
+  max-width: 100%;
 }
+
+.notion-asset-wrapper iframe {
+  border: none;
+}
+
 .notion-text {
   white-space: pre-wrap;
   word-break: break-word;
@@ -205,9 +208,50 @@ li {
 .notion-block {
   padding: 3px 2px;
 }
+
+.notion-code {
+  padding: 30px 16px 30px 20px;
+  margin: 4px 0;
+  tab-size: 2;
+  font-size: 85%;
+  display: block;
+  background: rgb(247, 246, 243);
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
+}
+
+.notion-column {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.notion-column > *:first-child {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.notion-column > *:last-child {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
 .notion-row {
   display: flex;
 }
+
+@media (max-width: 640px) {
+  .notion-row {
+    flex-direction: column;
+  }
+
+  .notion-row > *,
+  .notion-column > * {
+    width: 100% !important;
+  }
+}
+
 .notion-spacer:last-child {
   display: none;
 }
@@ -219,6 +263,7 @@ li {
   right: 0;
   bottom: 0;
   width: 100%;
+  height: 100%;
 }
 
 .notion-image-caption {
@@ -244,14 +289,4 @@ li {
 }
 .notion-callout-text {
   margin-left: 8px;
-}
-.notion-code {
-  padding: 30px 16px 30px 20px;
-  margin: 4px 0;
-  tab-size: 2;
-  font-size: 85%;
-  display: block;
-  background: rgb(247, 246, 243);
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
-    monospace;
 }
