@@ -1,9 +1,20 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
-import pageData from "../mock/page.json";
+import Head from "next/head";
+import fetch from "node-fetch";
 
-const blockMap = pageData.recordMap.block as BlockMapType;
+export async function getStaticProps() {
+  const data: BlockMapType = await fetch(
+    "https://notion-api.splitbee.io/v1/page/2e22de6b770e4166be301490f6ffd420"
+  ).then(res => res.json());
 
-const Home = () => (
+  return {
+    props: {
+      blockMap: data
+    }
+  };
+}
+
+const Home = ({ blockMap }) => (
   <div
     style={{
       maxWidth: 708,

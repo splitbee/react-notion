@@ -5,7 +5,7 @@
 A React renderer for Notion pages.
 Use Notion as CMS for your blog, documentation or personal site.
 
-_This packages doesn't handle the communication with the API._
+_This packages doesn't handle the communication with the API. Check out [notion-api-worker](https://github.com/splitbee/notion-api-worker) for an easy solution_.
 
 ## Features
 
@@ -17,7 +17,7 @@ _This packages doesn't handle the communication with the API._
 
 🎨 **Custom Styles** – Styles are easily adaptable. Optional styles included
 
-_\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [ZEIT now](https://zeit.co/now)._
+_\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [Vercel](https://vercel.cm)._
 
 ## Install
 
@@ -66,18 +66,13 @@ import { createAgent } from "notionapi-agent";
 const agent = createAgent();
 
 export async function getStaticProps() {
-  const pageId = "2e22de6b-770e-4166-be30-1490f6ffd420"; // Your Notion Page ID
-  const pageChunk = await agent.loadPageChunk({
-    pageId,
-    limit: 999,
-    chunkNumber: 0,
-    cursor: { stack: [] },
-    verticalColumns: false
-  });
+  const data = await fetch(
+    "https://notion-api.splitbee.io/v1/page/2e22de6b770e4166be301490f6ffd420"
+  ).then(res => res.json());
 
   return {
     props: {
-      blockMap: pageChunk.recordMap.block
+      blockMap: data
     }
   };
 }
