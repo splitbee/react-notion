@@ -221,6 +221,7 @@ h3 {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
     monospace;
   box-sizing: border-box;
+  overflow-x: scroll;
 }
 
 .notion-column {
