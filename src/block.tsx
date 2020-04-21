@@ -179,6 +179,39 @@ export const Block: React.FC<Block> = props => {
           </div>
         </div>
       );
+    case "bookmark":
+      return (
+        <div className="notion-row">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="notion-bookmark"
+            href={blockValue.properties.link[0][0]}
+          >
+            <div role="button" className="notion-bookmark-inner">
+              <div>
+                <div className="notion-bookmark-title">
+                  {renderChildText(blockValue.properties.title)}
+                </div>
+                <div className="notion-bookmark-description">
+                  {renderChildText(blockValue.properties.description)}
+                </div>
+                <div className="notion-bookmark-link">
+                  <img src={blockValue.format.bookmark_icon} />
+                  <div>{renderChildText(blockValue.properties.link)}</div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    <img src={blockValue.format.bookmark_cover} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      );
     default:
       if (process.env.NODE_ENV !== "production") {
         console.log("Unsupported type " + block?.value?.type);

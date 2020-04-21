@@ -242,7 +242,110 @@ h3 {
   display: flex;
 }
 
+.notion-bookmark {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  flex-grow: 1;
+  min-width: 0px;
+}
+
+.notion-bookmark-inner {
+  user-select: none;
+  transition: background 120ms ease-in 0s;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: stretch;
+  text-align: left;
+  overflow: hidden;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 3px;
+  position: relative;
+  color: inherit;
+  fill: inherit;
+}
+
+.notion-bookmark-inner > div:first-child {
+  flex: 4 1 180px;
+  padding: 12px 14px 14px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.notion-bookmark-title {
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(55, 53, 47);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 24px;
+  margin-bottom: 2px;
+}
+
+.notion-bookmark-description {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(55, 53, 47, 0.6);
+  height: 32px;
+  overflow: hidden;
+}
+
+.notion-bookmark-link {
+  display: flex;
+  margin-top: 6px;
+}
+
+.notion-bookmark-link > img {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin-right: 6px;
+}
+
+.notion-bookmark-link > div {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgb(55, 53, 47);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notion-bookmark-inner > div:last-child {
+  flex: 1 1 180px;
+  display: block;
+  position: relative;
+}
+
+.notion-bookmark-inner > div:last-child > div {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.notion-bookmark-inner > div:last-child > div > div {
+  width: 100%;
+  height: 100%;
+}
+
+.notion-bookmark-inner > div:last-child img {
+  display: block;
+  object-fit: cover;
+  border-radius: 1px;
+  width: 100%;
+  height: 100%;
+}
+
 @media (max-width: 640px) {
+  .notion-bookmark-inner > div:last-child {
+    display: none;
+  }
+
   .notion-row {
     flex-direction: column;
   }

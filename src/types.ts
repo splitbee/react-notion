@@ -106,6 +106,19 @@ export interface BaseTextValueType extends BaseValueType {
   };
 }
 
+interface BookmarkValueType extends BaseValueType {
+  type: "bookmark";
+  properties: {
+    link: DecorationType[];
+    title: DecorationType[];
+    description: DecorationType[];
+  };
+  format: {
+    bookmark_icon: string;
+    bookmark_cover: string;
+  };
+}
+
 interface TextValueType extends BaseTextValueType {
   type: "text";
 }
@@ -223,7 +236,8 @@ export type BlockValueType =
   | ImageValueType
   | VideoValueType
   | EmbedValueType
-  | CalloutValueType;
+  | CalloutValueType
+  | BookmarkValueType;
 
 export interface BlockType {
   role: string;
