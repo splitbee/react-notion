@@ -188,22 +188,20 @@ export const Block: React.FC<Block> = props => {
             className="notion-bookmark"
             href={blockValue.properties.link[0][0]}
           >
-            <div role="button" className="notion-bookmark-inner">
-              <div>
-                <div className="notion-bookmark-title">
-                  {renderChildText(blockValue.properties.title)}
-                </div>
-                <div className="notion-bookmark-description">
-                  {renderChildText(blockValue.properties.description)}
-                </div>
-                <div className="notion-bookmark-link">
-                  <img src={blockValue.format.bookmark_icon} />
-                  <div>{renderChildText(blockValue.properties.link)}</div>
-                </div>
+            <div>
+              <div className="notion-bookmark-title">
+                {renderChildText(blockValue.properties.title)}
               </div>
-              <div>
-                <img src={blockValue.format.bookmark_cover} />
+              <div className="notion-bookmark-description">
+                {renderChildText(blockValue.properties.description)}
               </div>
+              <div className="notion-bookmark-link">
+                <img src={blockValue.format.bookmark_icon} />
+                <div>{renderChildText(blockValue.properties.link)}</div>
+              </div>
+            </div>
+            <div>
+              <img src={blockValue.format.bookmark_cover} />
             </div>
           </a>
         </div>
