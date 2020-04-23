@@ -203,9 +203,7 @@ export const Block: React.FC<Block> = props => {
               </div>
               <div>
                 <div>
-                  <div>
-                    <img src={blockValue.format.bookmark_cover} />
-                  </div>
+                  <img src={blockValue.format.bookmark_cover} />
                 </div>
               </div>
             </div>
