@@ -91,26 +91,27 @@ List of pages that implement this library.
 
 Most common block types are supported. We happily accept pull requests to add support for the missing blocks.
 
-| Block Type    | Supported  | Notes             |
-| ------------- | ---------- | ----------------- |
-| Text          | ✅ Yes     |                   |
-| Heading       | ✅ Yes     |                   |
-| Image         | ✅ Yes     |                   |
-| Image Caption | ✅ Yes     |                   |
-| Bulleted List | ✅ Yes     |                   |
-| Numbered List | ✅ Yes     |                   |
-| Quote         | ✅ Yes     |                   |
-| Callout       | ✅ Yes     |                   |
-| Column        | ✅ Yes     |                   |
-| iframe        | ✅ Yes     |                   |
-| Video         | ✅ Yes     | Only embed videos |
-| Divider       | ✅ Yes     |                   |
-| Link          | ✅ Yes     |                   |
-| Code          | ✅ Yes     |                   |
-| Databases     | ❌ Missing |                   |
-| Checkbox      | ❌ Missing |                   |
-| Toggle List   | ❌ Missing |                   |
-| Web Bookmark  | ❌ Missing |                   |
+| Block Type        | Supported  | Notes                |
+| ----------------- | ---------- | -------------------- |
+| Text              | ✅ Yes     |                      |
+| Heading           | ✅ Yes     |                      |
+| Image             | ✅ Yes     |                      |
+| Image Caption     | ✅ Yes     |                      |
+| Bulleted List     | ✅ Yes     |                      |
+| Numbered List     | ✅ Yes     |                      |
+| Quote             | ✅ Yes     |                      |
+| Callout           | ✅ Yes     |                      |
+| Column            | ✅ Yes     |                      |
+| iframe            | ✅ Yes     |                      |
+| Video             | ✅ Yes     | Only embedded videos |
+| Divider           | ✅ Yes     |                      |
+| Link              | ✅ Yes     |                      |
+| Code              | ✅ Yes     |                      |
+| Web Bookmark      | ✅ Yes     |                      |
+| Databases         | ❌ Missing |                      |
+| Checkbox          | ❌ Missing |                      |
+| Toggle List       | ❌ Missing |                      |
+| Table Of Contents | ❌ Missing |                      |
 
 ## Credits
 
