@@ -245,7 +245,84 @@ h3 {
   display: flex;
 }
 
+.notion-bookmark {
+  margin: 4px 0;
+  text-decoration: none;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 3px;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+.notion-bookmark > div:first-child {
+  flex: 4 1 180px;
+  padding: 12px 14px 14px;
+  overflow: hidden;
+  text-align: left;
+  color: rgb(55, 53, 47);
+}
+
+.notion-bookmark-title {
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 24px;
+  margin-bottom: 2px;
+}
+
+.notion-bookmark-description {
+  font-size: 12px;
+  line-height: 16px;
+  opacity: 0.6;
+  height: 32px;
+  overflow: hidden;
+}
+
+.notion-bookmark-link {
+  display: flex;
+  margin-top: 6px;
+}
+
+.notion-bookmark-link > img {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin-right: 6px;
+}
+
+.notion-bookmark-link > div {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgb(55, 53, 47);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notion-bookmark-image {
+  flex: 1 1 180px;
+  position: relative;
+}
+
+.notion-bookmark-image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.notion-column .notion-bookmark-image {
+  display: none;
+}
+
 @media (max-width: 640px) {
+  .notion-bookmark-image {
+    display: none;
+  }
+
   .notion-row {
     flex-direction: column;
   }
