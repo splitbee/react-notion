@@ -19,12 +19,13 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
     block_width
   } = format;
 
+  const aspectRatio = block_aspect_ratio || block_height / block_width;
+
   if (type === "embed" || type === "video") {
     return (
       <div
         style={{
-          paddingBottom: `${(block_aspect_ratio || block_height / block_width) *
-            100}%`,
+          paddingBottom: `${aspectRatio * 100}%`,
           position: "relative"
         }}
       >
@@ -43,7 +44,7 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
       return (
         <div
           style={{
-            paddingBottom: `${block_aspect_ratio * 100}%`,
+            paddingBottom: `${aspectRatio * 100}%`,
             position: "relative"
           }}
         >

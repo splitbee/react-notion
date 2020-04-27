@@ -5,19 +5,19 @@
 A React renderer for Notion pages.
 Use Notion as CMS for your blog, documentation or personal site.
 
-_This packages doesn't handle the communication with the API._
+_This packages doesn't handle the communication with the API. Check out [notion-api-worker](https://github.com/splitbee/notion-api-worker) for an easy solution_.
 
 ## Features
 
 ⚡️ **Fast** – Up to 10x faster than Notion\*
 
-🎯 **Precise** – Results are _almost_ identical
+🎯 **Accurate** – Results are _almost_ identical
 
 🔮 **Code Highlighting** – Automatic code highlighting with [prismjs](https://prismjs.com/)
 
 🎨 **Custom Styles** – Styles are easily adaptable. Optional styles included
 
-_\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [ZEIT now](https://zeit.co/now)._
+_\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [Vercel](https://vercel.com)._
 
 ## Install
 
@@ -33,7 +33,7 @@ We can store the API response in a `.json` file and import it.
 
 ```js
 import "react-notion/src/styles.css";
-import "prismjs/themes/prism-tomorrow.css"; // only needed if you use Code Blocks
+import "prismjs/themes/prism-tomorrow.css"; // only needed for code highlighting
 import { NotionRenderer } from "react-notion";
 
 import response from "./load-page-chunk-response.json"; // https://www.notion.so/api/v3/loadPageChunk
@@ -51,33 +51,24 @@ A working example can be found inside the `example` directory.
 
 ### Next.js Example
 
-In this example we use [Next.js](https://github.com/zeit/next.js) for SSG. We use [notionapi-agent](https://github.com/dragonman225/notionapi-agent) to fetch data from the API.
-
-To get your `pageId`, inspect network requests while visiting a public Notion page. It is included in the body of the `POST /api/v3/loadPageChunk` request.
+In this example we use [Next.js](https://github.com/zeit/next.js) for SSG. We use [notion-api-worker](https://github.com/splitbee/notion-api-worker) to fetch data from the API.
 
 `/pages/my-post.jsx`
 
 ```js
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
-import { NotionRenderer } from "react-notion";
-import { createAgent } from "notionapi-agent";
 
-const agent = createAgent();
+import { NotionRenderer } from "react-notion";
 
 export async function getStaticProps() {
-  const pageId = "2e22de6b-770e-4166-be30-1490f6ffd420"; // Your Notion Page ID
-  const pageChunk = await agent.loadPageChunk({
-    pageId,
-    limit: 999,
-    chunkNumber: 0,
-    cursor: { stack: [] },
-    verticalColumns: false
-  });
+  const data = await fetch(
+    "https://notion-api.splitbee.io/v1/page/<NOTION_PAGE_ID>"
+  ).then(res => res.json());
 
   return {
     props: {
-      blockMap: pageChunk.recordMap.block
+      blockMap: data
     }
   };
 }
