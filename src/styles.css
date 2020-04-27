@@ -246,6 +246,7 @@ h3 {
 }
 
 .notion-bookmark {
+  margin: 4px 0;
   text-decoration: none;
   border: 1px solid rgba(55, 53, 47, 0.16);
   border-radius: 3px;
@@ -301,20 +302,24 @@ h3 {
   text-overflow: ellipsis;
 }
 
-.notion-bookmark > div:last-child {
+.notion-bookmark-image {
   flex: 1 1 180px;
   position: relative;
 }
 
-.notion-bookmark > div:last-child img {
+.notion-bookmark-image img {
   object-fit: cover;
   width: 100%;
   height: 100%;
   position: absolute;
 }
 
+.notion-column .notion-bookmark-image {
+  display: none;
+}
+
 @media (max-width: 640px) {
-  .notion-bookmark > div:last-child {
+  .notion-bookmark-image {
     display: none;
   }
 

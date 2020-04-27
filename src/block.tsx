@@ -2,6 +2,7 @@ import * as React from "react";
 import { DecorationType, BlockType, ContentValueType } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
+import { classNames, getTextContent } from "./utils";
 
 export const renderChildText = (properties: DecorationType[]) => {
   return properties.map(([text, decorations], i) => {
@@ -171,7 +172,11 @@ export const Block: React.FC<Block> = props => {
     case "callout":
       return (
         <div
-          className={`notion-callout notion-${blockValue.format.block_color}_co`}
+          className={classNames(
+            "notion-callout",
+            blockValue.format.block_color &&
+              `notion-${blockValue.format.block_color}_co`
+          )}
         >
           <div>{blockValue.format.page_icon}</div>
           <div className="notion-callout-text">
@@ -185,7 +190,11 @@ export const Block: React.FC<Block> = props => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            className="notion-bookmark"
+            className={classNames(
+              "notion-bookmark",
+              blockValue.format.block_color &&
+                `notion-${blockValue.format.block_color}`
+            )}
             href={blockValue.properties.link[0][0]}
           >
             <div>
@@ -196,12 +205,18 @@ export const Block: React.FC<Block> = props => {
                 {renderChildText(blockValue.properties.description)}
               </div>
               <div className="notion-bookmark-link">
-                <img src={blockValue.format.bookmark_icon} />
+                <img
+                  src={blockValue.format.bookmark_icon}
+                  alt={getTextContent(blockValue.properties.title)}
+                />
                 <div>{renderChildText(blockValue.properties.link)}</div>
               </div>
             </div>
-            <div>
-              <img src={blockValue.format.bookmark_cover} />
+            <div className="notion-bookmark-image">
+              <img
+                src={blockValue.format.bookmark_cover}
+                alt={getTextContent(blockValue.properties.title)}
+              />
             </div>
           </a>
         </div>

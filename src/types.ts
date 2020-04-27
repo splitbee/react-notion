@@ -114,6 +114,7 @@ interface BookmarkValueType extends BaseValueType {
     description: DecorationType[];
   };
   format: {
+    block_color?: string;
     bookmark_icon: string;
     bookmark_cover: string;
   };
