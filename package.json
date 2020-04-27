@@ -28,7 +28,10 @@
     }
   },
   "types": "./dist/types.d.ts",
-  "prettier": {},
+  "prettier": {
+    "arrowParens": "avoid",
+    "trailingComma": "none"
+  },
   "bugs": {
     "url": "https://github.com/splitbee/react-notion/issues"
   },
