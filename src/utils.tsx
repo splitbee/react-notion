@@ -34,7 +34,7 @@ export const reduceBlockGroups = (blockMap: BlockMapType, level: number) => (
       break;
     case "bulleted_list":
       wrapper = (props: any) => (
-        <ol className="notion-list notion-list-disc" {...props} />
+        <ul className="notion-list notion-list-disc" {...props} />
       );
       break;
     default:
