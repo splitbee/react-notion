@@ -1,6 +1,7 @@
 import React from "react";
 import { BlockMapType } from "./types";
 import { Block } from "./block";
+import { reduceBlockGroups, BlockGroup } from "./utils";
 
 interface NotionRendererProps {
   blockMap: BlockMapType;
@@ -24,14 +25,32 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
       block={currentBlock}
       parentBlock={parentBlock}
     >
-      {currentBlock?.value?.content?.map(contentId => (
-        <NotionRenderer
-          key={contentId}
-          currentId={contentId}
-          blockMap={blockMap}
-          level={level + 1}
-        />
-      ))}
+      {currentBlock?.value?.content
+        ?.reduce<Array<string | BlockGroup>>(
+          reduceBlockGroups(blockMap, level),
+          []
+        )
+        .map(contentIdOrGroup =>
+          typeof contentIdOrGroup === "string" ? (
+            <NotionRenderer
+              key={contentIdOrGroup}
+              currentId={contentIdOrGroup}
+              blockMap={blockMap}
+              level={level + 1}
+            />
+          ) : (
+            <contentIdOrGroup.wrapper>
+              {contentIdOrGroup.blockIds.map(contentId => (
+                <NotionRenderer
+                  key={contentId}
+                  currentId={contentId}
+                  blockMap={blockMap}
+                  level={level + 1}
+                />
+              ))}
+            </contentIdOrGroup.wrapper>
+          )
+        )}
     </Block>
   );
 };

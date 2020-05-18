@@ -51,7 +51,7 @@ interface Block {
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, parentBlock, children } = props;
+  const { block, children } = props;
   const blockValue = block?.value;
   switch (blockValue.type) {
     case "page":
@@ -90,33 +90,20 @@ export const Block: React.FC<Block> = props => {
       );
     case "bulleted_list":
     case "numbered_list":
-      const isTopLevel = block.value.type !== parentBlock.value.type;
-
-      const wrapList = (content: React.ReactNode) =>
-        blockValue.type === "bulleted_list" ? (
-          <ul className="notion-list notion-list-disc">{content}</ul>
-        ) : (
-          <ol className="notion-list notion-list-numbered">{content}</ol>
-        );
-
       let output: JSX.Element | null = null;
 
-      if (blockValue.content) {
-        output = (
-          <>
-            {blockValue.properties && (
-              <li>{renderChildText(blockValue.properties.title)}</li>
-            )}
-            {wrapList(children)}
-          </>
-        );
-      } else {
-        output = blockValue.properties ? (
-          <li>{renderChildText(blockValue.properties.title)}</li>
-        ) : null;
-      }
+      output = blockValue.properties ? (
+        <>
+          <li>
+            {renderChildText(blockValue.properties.title)}
+            {children}
+          </li>
+        </>
+      ) : (
+        <>{React.Children.count(children) > 0 && <li>{children}</li>}</>
+      );
 
-      return isTopLevel ? wrapList(output) : output;
+      return output;
 
     case "image":
     case "embed":
