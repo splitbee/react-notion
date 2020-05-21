@@ -2,10 +2,13 @@
 
 ![npm version](https://badgen.net/npm/v/react-notion) ![npm version](https://badgen.net/david/dep/splitbee/react-notion) ![minzipped sized](https://badgen.net/bundlephobia/minzip/react-notion)
 
+
 A React renderer for Notion pages.
 Use Notion as CMS for your blog, documentation or personal site.
 
 _This packages doesn't handle the communication with the API. Check out [notion-api-worker](https://github.com/splitbee/notion-api-worker) for an easy solution_.
+
+<sub>Created by <a href="https://twitter.com/timolins">Timo Lins</a> & <a href="https://twitter.com/linstobias">Tobias Lins</a> with the help of all <a href="https://github.com/splitbee/react-notion/graphs/contributors">contributors</a> ❤️</sub>
 
 ## Features
 
@@ -118,3 +121,4 @@ Most common block types are supported. We happily accept pull requests to add su
 - [Tobias Lins](https://tobi.sh) – Idea, Code
 - [Timo Lins](https://timo.sh) – Code, Documentation
 - [samwightt](https://github.com/samwightt) – Inspiration & API Typings
+- [All people that contributed 💕](https://github.com/splitbee/react-notion/graphs/contributors) 
