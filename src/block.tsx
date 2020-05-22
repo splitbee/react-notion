@@ -5,7 +5,7 @@ import Code from "./components/code";
 import { classNames, getTextContent } from "./utils";
 
 export const renderChildText = (properties: DecorationType[]) => {
-  return properties.map(([text, decorations], i) => {
+  return properties?.map(([text, decorations], i) => {
     if (!decorations) {
       return <React.Fragment key={i}>{text}</React.Fragment>;
     }
