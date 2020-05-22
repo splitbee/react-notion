@@ -91,12 +91,15 @@ export const Block: React.FC<Block> = props => {
     case "bulleted_list":
     case "numbered_list":
       const isTopLevel = block.value.type !== parentBlock.value.type;
-
+      const itemPosition =
+        1 + (parentBlock.value.content?.indexOf(block.value.id) || 0);
       const wrapList = (content: React.ReactNode) =>
         blockValue.type === "bulleted_list" ? (
           <ul className="notion-list notion-list-disc">{content}</ul>
         ) : (
-          <ol className="notion-list notion-list-numbered">{content}</ol>
+          <ol start={itemPosition} className="notion-list notion-list-numbered">
+            {content}
+          </ol>
         );
 
       let output: JSX.Element | null = null;
