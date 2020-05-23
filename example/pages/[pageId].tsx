@@ -3,7 +3,7 @@ import Head from "next/head";
 import fetch from "node-fetch";
 
 export async function getServerSideProps(context) {
-  const pageId = context.params?.pageId.split("-").reverse()[0];
+  const pageId = context.params?.pageId;
 
   if (!pageId) {
     return;
@@ -46,7 +46,10 @@ const NotionPage = ({ blockMap }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <NotionRenderer blockMap={blockMap} />
+      <NotionRenderer
+        blockMap={blockMap}
+        mapPageUrl={id => `/${title}--${id}`}
+      />
       <style jsx>{`
         div :global(.notion-code) {
           box-sizing: border-box;
