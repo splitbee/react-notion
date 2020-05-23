@@ -2,7 +2,6 @@
 
 ![npm version](https://badgen.net/npm/v/react-notion) ![npm version](https://badgen.net/david/dep/splitbee/react-notion) ![minzipped sized](https://badgen.net/bundlephobia/minzip/react-notion)
 
-
 A React renderer for Notion pages.
 Use Notion as CMS for your blog, documentation or personal site.
 
@@ -111,9 +110,9 @@ Most common block types are supported. We happily accept pull requests to add su
 | Link              | ✅ Yes     |                      |
 | Code              | ✅ Yes     |                      |
 | Web Bookmark      | ✅ Yes     |                      |
+| Toggle List       | ✅ Yes     |                      |
 | Databases         | ❌ Missing |                      |
 | Checkbox          | ❌ Missing |                      |
-| Toggle List       | ❌ Missing |                      |
 | Table Of Contents | ❌ Missing |                      |
 
 ## Credits
@@ -121,4 +120,4 @@ Most common block types are supported. We happily accept pull requests to add su
 - [Tobias Lins](https://tobi.sh) – Idea, Code
 - [Timo Lins](https://timo.sh) – Code, Documentation
 - [samwightt](https://github.com/samwightt) – Inspiration & API Typings
-- [All people that contributed 💕](https://github.com/splitbee/react-notion/graphs/contributors) 
+- [All people that contributed 💕](https://github.com/splitbee/react-notion/graphs/contributors)

@@ -219,6 +219,7 @@ h3 {
 
 .notion-list li {
   padding: 6px 0px;
+  white-space: pre-wrap;
 }
 
 .notion-asset-wrapper {
@@ -232,7 +233,6 @@ h3 {
 
 .notion-text {
   white-space: pre-wrap;
-  word-break: break-word;
   caret-color: rgb(55, 53, 47);
 }
 .notion-block {
@@ -398,4 +398,8 @@ h3 {
 }
 .notion-callout-text {
   margin-left: 8px;
+}
+
+.notion-toggle > div {
+  margin-left: 1.1em;
 }

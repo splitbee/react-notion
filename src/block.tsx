@@ -245,6 +245,13 @@ export const Block: React.FC<Block> = props => {
           </a>
         </div>
       );
+    case "toggle":
+      return (
+        <details className="notion-toggle">
+          <summary>{renderChildText(blockValue.properties.title)}</summary>
+          <div>{children}</div>
+        </details>
+      );
     default:
       if (process.env.NODE_ENV !== "production") {
         console.log("Unsupported type " + block?.value?.type);

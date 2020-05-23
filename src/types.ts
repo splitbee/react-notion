@@ -182,6 +182,13 @@ interface CalloutValueType extends BaseValueType {
   };
 }
 
+interface ToggleValueType extends BaseValueType {
+  type: "toggle";
+  properties: {
+    title: DecorationType[];
+  };
+}
+
 export interface ContentValueType extends BaseValueType {
   properties: {
     source: string[][];
@@ -238,7 +245,8 @@ export type BlockValueType =
   | VideoValueType
   | EmbedValueType
   | CalloutValueType
-  | BookmarkValueType;
+  | BookmarkValueType
+  | ToggleValueType;
 
 export interface BlockType {
   role: string;
