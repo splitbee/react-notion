@@ -46,10 +46,7 @@ const NotionPage = ({ blockMap }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <NotionRenderer
-        blockMap={blockMap}
-        mapPageUrl={id => `/${title}--${id}`}
-      />
+      <NotionRenderer blockMap={blockMap} />
       <style jsx>{`
         div :global(.notion-code) {
           box-sizing: border-box;
