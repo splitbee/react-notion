@@ -2,6 +2,8 @@ import React from "react";
 import { BlockMapType } from "./types";
 import { Block, MapPageUrl } from "./block";
 
+import { getListNumber } from "./utils";
+
 export interface NotionRendererProps {
   blockMap: BlockMapType;
   currentId?: string;
@@ -17,14 +19,22 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
 }) => {
   const id = currentId || Object.keys(blockMap)[0];
   const currentBlock = blockMap[id];
-  if (!currentBlock) return null;
   const parentBlock = blockMap[currentBlock.value.parent_id];
+
+  if (!currentBlock) return null;
+
+  const listNumber =
+    currentBlock.value.type === "numbered_list" &&
+    parentBlock.value.type !== "numbered_list"
+      ? getListNumber(id, blockMap)
+      : undefined;
+
   return (
     <Block
       key={id}
       level={level}
       block={currentBlock}
-      parentBlock={parentBlock}
+      listNumber={listNumber}
       mapPageUrl={mapPageUrl}
     >
       {currentBlock?.value?.content?.map(contentId => (
