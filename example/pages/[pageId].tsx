@@ -35,24 +35,21 @@ const NotionPage = ({ blockMap }) => {
     blockMap[Object.keys(blockMap)[0]]?.value.properties.title[0][0];
 
   return (
-    <div
-      style={{
-        maxWidth: 708,
-        margin: "0 auto",
-        padding: "0 8px",
-        fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"`
-      }}
-    >
+    <>
       <Head>
         <title>{title}</title>
       </Head>
-      <NotionRenderer blockMap={blockMap} />
-      <style jsx>{`
+      <NotionRenderer blockMap={blockMap} fullPage />
+      <style jsx global>{`
         div :global(.notion-code) {
           box-sizing: border-box;
         }
+        body {
+          padding: 0;
+          margin: 0;
+        }
       `}</style>
-    </div>
+    </>
   );
 };
 
