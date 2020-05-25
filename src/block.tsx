@@ -48,17 +48,17 @@ export type MapPageUrl = (pageId: string) => string;
 
 interface Block {
   block: BlockType;
-  parentBlock: BlockType;
   level: number;
+  listNumber?: number;
   mapPageUrl?: MapPageUrl;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, parentBlock, children } = props;
+  const { block, children, listNumber, level } = props;
   const blockValue = block?.value;
   switch (blockValue?.type) {
     case "page":
-      if (props.level === 0) return <div className="notion">{children}</div>;
+      if (level === 0) return <div className="notion">{children}</div>;
       else {
         if (!blockValue.properties) return null;
         return (
@@ -111,14 +111,11 @@ export const Block: React.FC<Block> = props => {
       );
     case "bulleted_list":
     case "numbered_list":
-      const isTopLevel = block.value.type !== parentBlock?.value?.type;
-      const itemPosition =
-        1 + (parentBlock.value.content?.indexOf(block.value.id) || 0);
-      const wrapList = (content: React.ReactNode) =>
+      const wrapList = (content: React.ReactNode, start?: number) =>
         blockValue.type === "bulleted_list" ? (
           <ul className="notion-list notion-list-disc">{content}</ul>
         ) : (
-          <ol start={itemPosition} className="notion-list notion-list-numbered">
+          <ol start={start} className="notion-list notion-list-numbered">
             {content}
           </ol>
         );
@@ -140,7 +137,7 @@ export const Block: React.FC<Block> = props => {
         ) : null;
       }
 
-      return isTopLevel ? wrapList(output) : output;
+      return listNumber !== undefined ? wrapList(output, listNumber) : output;
 
     case "image":
     case "embed":
