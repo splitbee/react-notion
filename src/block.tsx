@@ -85,6 +85,8 @@ export const Block: React.FC<Block> = props => {
             page_small_text
           } = blockValue.format || {};
 
+          const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
+
           return (
             <div className="notion">
               {page_cover && (
@@ -93,9 +95,7 @@ export const Block: React.FC<Block> = props => {
                   alt={getTextContent(blockValue.properties.title)}
                   className="notion-page-cover"
                   style={{
-                    objectPosition: `center ${
-                      (1 - (page_cover_position || 0.5)) * 100
-                    }%`
+                    objectPosition: `center ${coverPosition}%`
                   }}
                 />
               )}
