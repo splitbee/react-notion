@@ -79,7 +79,7 @@ type BaseDecorationType = [string];
 type AdditionalDecorationType = [string, SubDecorationType[]];
 export type DecorationType = BaseDecorationType | AdditionalDecorationType;
 
-interface PageValueType extends BaseValueType {
+export interface PageValueType extends BaseValueType {
   type: "page";
   properties?: {
     title: DecorationType[];
@@ -171,7 +171,7 @@ interface ColumnValueType extends BaseValueType {
   };
 }
 
-interface CalloutValueType extends BaseValueType {
+export interface CalloutValueType extends BaseValueType {
   type: "callout";
   format: {
     page_icon: string;

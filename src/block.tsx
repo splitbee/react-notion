@@ -1,8 +1,19 @@
 import * as React from "react";
-import { DecorationType, BlockType, ContentValueType } from "./types";
+import {
+  DecorationType,
+  BlockType,
+  ContentValueType,
+  BlockMapType
+} from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
-import { classNames, getTextContent } from "./utils";
+import PageIcon from "./components/page-icon";
+import {
+  classNames,
+  getTextContent,
+  getListNumber,
+  toNotionImageUrl
+} from "./utils";
 
 export const renderChildText = (properties: DecorationType[]) => {
   return properties?.map(([text, decorations], i) => {
@@ -49,17 +60,73 @@ export type MapPageUrl = (pageId: string) => string;
 interface Block {
   block: BlockType;
   level: number;
-  listNumber?: number;
+  blockMap: BlockMapType;
+
+  fullPage?: boolean;
   mapPageUrl?: MapPageUrl;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, children, listNumber, level } = props;
+  const { block, children, level, fullPage, blockMap } = props;
   const blockValue = block?.value;
   switch (blockValue?.type) {
     case "page":
-      if (level === 0) return <div className="notion">{children}</div>;
-      else {
+      if (level === 0) {
+        if (fullPage) {
+          if (!blockValue.properties) {
+            return null;
+          }
+
+          const {
+            page_icon,
+            page_cover,
+            page_cover_position,
+            page_full_width,
+            page_small_text
+          } = blockValue.format || {};
+
+          const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
+
+          return (
+            <div className="notion">
+              {page_cover && (
+                <img
+                  src={toNotionImageUrl(page_cover)}
+                  alt={getTextContent(blockValue.properties.title)}
+                  className="notion-page-cover"
+                  style={{
+                    objectPosition: `center ${coverPosition}%`
+                  }}
+                />
+              )}
+              <div
+                className={classNames(
+                  "notion-page",
+                  !page_cover && "notion-page-offset",
+                  page_full_width && "notion-full-width",
+                  page_small_text && "notion-small-text"
+                )}
+              >
+                {page_icon && (
+                  <PageIcon
+                    className={
+                      page_cover ? "notion-page-icon-offset" : undefined
+                    }
+                    block={block}
+                    big
+                  />
+                )}
+                <div className="notion-title">
+                  {renderChildText(blockValue.properties.title)}
+                </div>
+                {children}
+              </div>
+            </div>
+          );
+        } else {
+          return <div className="notion">{children}</div>;
+        }
+      } else {
         if (!blockValue.properties) return null;
         return (
           <a
@@ -68,7 +135,7 @@ export const Block: React.FC<Block> = props => {
           >
             {blockValue.format && (
               <div className="notion-page-icon">
-                {blockValue.format.page_icon}
+                <PageIcon block={block} />
               </div>
             )}
             <div className="notion-page-text">
@@ -102,10 +169,16 @@ export const Block: React.FC<Block> = props => {
       return <hr className="notion-hr" />;
     case "text":
       if (!blockValue.properties) {
-        return <p style={{ height: "1rem" }}> </p>;
+        return <div className="notion-blank" />;
       }
+      const blockColor = blockValue.format?.block_color;
       return (
-        <p className={`notion-text`}>
+        <p
+          className={classNames(
+            `notion-text`,
+            blockColor && `notion-${blockColor}`
+          )}
+        >
           {renderChildText(blockValue.properties.title)}
         </p>
       );
@@ -137,7 +210,11 @@ export const Block: React.FC<Block> = props => {
         ) : null;
       }
 
-      return listNumber !== undefined ? wrapList(output, listNumber) : output;
+      const isTopLevel =
+        block.value.type !== blockMap[block.value.parent_id].value.type;
+      const start = getListNumber(blockValue.id, blockMap);
+
+      return isTopLevel ? wrapList(output, start) : output;
 
     case "image":
     case "embed":
@@ -199,7 +276,9 @@ export const Block: React.FC<Block> = props => {
               `notion-${blockValue.format.block_color}_co`
           )}
         >
-          <div>{blockValue.format.page_icon}</div>
+          <div>
+            <PageIcon block={block} />
+          </div>
           <div className="notion-callout-text">
             {renderChildText(blockValue.properties.title)}
           </div>

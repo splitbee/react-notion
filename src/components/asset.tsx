@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BlockType, ContentValueType } from "../types";
+import { toNotionImageUrl } from "../utils";
 
 const types = ["video", "image", "embed"];
 
@@ -34,9 +35,7 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
     );
   }
 
-  const src = `https://notion.so/image/${encodeURIComponent(
-    value.properties.source[0][0]
-  )}`;
+  const src = toNotionImageUrl(value.properties.source[0][0]);
 
   if (type === "image") {
     const caption = value.properties.caption?.[0][0];

@@ -93,27 +93,29 @@ List of pages that implement this library.
 
 Most common block types are supported. We happily accept pull requests to add support for the missing blocks.
 
-| Block Type        | Supported  | Notes                |
-| ----------------- | ---------- | -------------------- |
-| Text              | ✅ Yes     |                      |
-| Heading           | ✅ Yes     |                      |
-| Image             | ✅ Yes     |                      |
-| Image Caption     | ✅ Yes     |                      |
-| Bulleted List     | ✅ Yes     |                      |
-| Numbered List     | ✅ Yes     |                      |
-| Quote             | ✅ Yes     |                      |
-| Callout           | ✅ Yes     |                      |
-| Column            | ✅ Yes     |                      |
-| iframe            | ✅ Yes     |                      |
-| Video             | ✅ Yes     | Only embedded videos |
-| Divider           | ✅ Yes     |                      |
-| Link              | ✅ Yes     |                      |
-| Code              | ✅ Yes     |                      |
-| Web Bookmark      | ✅ Yes     |                      |
-| Toggle List       | ✅ Yes     |                      |
-| Databases         | ❌ Missing |                      |
-| Checkbox          | ❌ Missing |                      |
-| Table Of Contents | ❌ Missing |                      |
+| Block Type        | Supported  | Notes                  |
+| ----------------- | ---------- | ---------------------- |
+| Text              | ✅ Yes     |                        |
+| Heading           | ✅ Yes     |                        |
+| Image             | ✅ Yes     |                        |
+| Image Caption     | ✅ Yes     |                        |
+| Bulleted List     | ✅ Yes     |                        |
+| Numbered List     | ✅ Yes     |                        |
+| Quote             | ✅ Yes     |                        |
+| Callout           | ✅ Yes     |                        |
+| Column            | ✅ Yes     |                        |
+| iframe            | ✅ Yes     |                        |
+| Video             | ✅ Yes     | Only embedded videos   |
+| Divider           | ✅ Yes     |                        |
+| Link              | ✅ Yes     |                        |
+| Code              | ✅ Yes     |                        |
+| Web Bookmark      | ✅ Yes     |                        |
+| Toggle List       | ✅ Yes     |                        |
+| Page Links        | ✅ Yes     |                        |
+| Header            | ✅ Yes     | Enable with `fullPage` |
+| Databases         | ❌ Missing |                        |
+| Checkbox          | ❌ Missing |                        |
+| Table Of Contents | ❌ Missing |                        |
 
 ## Credits
 

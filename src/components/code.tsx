@@ -10,9 +10,8 @@ const Code: React.FC<{ code: string; language: string }> = ({
     languages[language.toLowerCase()] || languages.javascript;
 
   return (
-    <pre>
+    <pre className="notion-code">
       <code
-        className="notion-code"
         dangerouslySetInnerHTML={{
           __html: highlight(code, prismLanguage, language)
         }}
