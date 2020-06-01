@@ -284,3 +284,10 @@ export interface LoadPageChunkData {
     stack: any[];
   };
 }
+
+export type LinkTargetType =
+  | "_self"
+  | "_blank"
+  | {
+      host: string;
+    };

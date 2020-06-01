@@ -3,7 +3,8 @@ import {
   DecorationType,
   BlockType,
   ContentValueType,
-  BlockMapType
+  BlockMapType,
+  LinkTargetType
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
@@ -12,10 +13,17 @@ import {
   classNames,
   getTextContent,
   getListNumber,
-  toNotionImageUrl
+  toNotionImageUrl,
+  getLinkTargetProps
 } from "./utils";
 
-export const renderChildText = (properties: DecorationType[]) => {
+interface createRenderChildText {
+  linkTarget?: LinkTargetType;
+}
+
+export const createRenderChildText = (options?: createRenderChildText) => (
+  properties: DecorationType[]
+) => {
   return properties?.map(([text, decorations], i) => {
     if (!decorations) {
       return <React.Fragment key={i}>{text}</React.Fragment>;
@@ -43,7 +51,13 @@ export const renderChildText = (properties: DecorationType[]) => {
           return <s key={i}>{element}</s>;
         case "a":
           return (
-            <a className="notion-link" href={decorator[1]} key={i}>
+            <a
+              className="notion-link"
+              href={decorator[1]}
+              key={i}
+              rel="noopener noreferrer"
+              {...getLinkTargetProps(decorator[1], options?.linkTarget)}
+            >
               {element}
             </a>
           );
@@ -61,14 +75,17 @@ interface Block {
   block: BlockType;
   level: number;
   blockMap: BlockMapType;
+  linkTarget?: LinkTargetType;
 
   fullPage?: boolean;
   mapPageUrl?: MapPageUrl;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, children, level, fullPage, blockMap } = props;
+  const { block, children, level, fullPage, blockMap, linkTarget } = props;
   const blockValue = block?.value;
+  const renderChildText = createRenderChildText({ linkTarget });
+
   switch (blockValue?.type) {
     case "page":
       if (level === 0) {

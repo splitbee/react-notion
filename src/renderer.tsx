@@ -1,11 +1,12 @@
 import React from "react";
-import { BlockMapType } from "./types";
+import { BlockMapType, LinkTargetType } from "./types";
 import { Block, MapPageUrl } from "./block";
 
 export interface NotionRendererProps {
   blockMap: BlockMapType;
   mapPageUrl?: MapPageUrl;
   fullPage?: boolean;
+  linkTarget?: LinkTargetType;
 
   currentId?: string;
   level?: number;

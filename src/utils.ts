@@ -1,4 +1,4 @@
-import { DecorationType, BlockMapType } from "./types";
+import { DecorationType, BlockMapType, LinkTargetType } from "./types";
 
 export const classNames = (...classes: Array<string | undefined | false>) =>
   classes.filter(a => !!a).join(" ");
@@ -47,4 +47,29 @@ export const toNotionImageUrl = (url: string) => {
   return `https://notion.so${
     url.startsWith("/image") ? url : `/image/${encodeURIComponent(url)}`
   }`;
+};
+
+export const getLinkTargetProps = (
+  link: string,
+  linkTarget: LinkTargetType = "_self"
+) => {
+  const targetBlank = {
+    target: "_blank"
+  };
+
+  if (linkTarget === "_blank") {
+    return targetBlank;
+  }
+
+  if (linkTarget === "_self" || !linkTarget.host) {
+    return;
+  }
+
+  const parsedLink = new URL(link);
+
+  if (linkTarget.host !== parsedLink.host) {
+    return targetBlank;
+  }
+
+  return;
 };
