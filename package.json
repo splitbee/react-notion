@@ -59,7 +59,6 @@
   },
   "dependencies": {
     "medium-zoom": "^1.0.5",
-    "prismjs": "^1.20.0",
-    "react-modal": "^3.11.2"
+    "prismjs": "^1.20.0"
   }
 }
