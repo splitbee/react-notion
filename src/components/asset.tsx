@@ -4,7 +4,8 @@ import { toNotionImageUrl } from "../utils";
 
 const types = ["video", "image", "embed"];
 
-const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
+const Asset: React.FC<{ block: BlockType; zoom?: any }> = ({ block, zoom }) => {
+  const zoomRef = React.useRef(zoom ? zoom.clone() : null);
   const value = block.value as ContentValueType;
   const type = block.value.type;
 
@@ -37,8 +38,15 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
 
   const src = toNotionImageUrl(value.properties.source[0][0]);
 
+  function attachZoom(image: any) {
+    if (zoomRef.current) {
+      (zoomRef.current as any).attach(image);
+    }
+  }
+
   if (type === "image") {
     const caption = value.properties.caption?.[0][0];
+
     if (block_aspect_ratio) {
       return (
         <div
@@ -47,11 +55,16 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
             position: "relative"
           }}
         >
-          <img className="notion-image-inset" alt={caption} src={src} />
+          <img
+            className="notion-image-inset"
+            alt={caption || "notion image"}
+            src={src}
+            ref={attachZoom}
+          />
         </div>
       );
     } else {
-      return <img alt={caption} src={src} />;
+      return <img alt={caption} src={src} ref={attachZoom} />;
     }
   }
 

@@ -23,17 +23,19 @@ const PageIcon: React.FC<AssetProps> = ({ block, className, big }) => {
   if (!isIconBlock(block.value)) {
     return null;
   }
-  const icon = block.value.format.page_icon;
+  const icon = block.value.format?.page_icon;
   const title = block.value.properties?.title;
 
   if (icon?.includes("http")) {
+    const url = toNotionImageUrl(icon);
+
     return (
       <img
         className={classNames(
           className,
           big ? "notion-page-icon-cover" : "notion-page-icon"
         )}
-        src={toNotionImageUrl(icon)}
+        src={url}
         alt={title ? getTextContent(title) : "Icon"}
       />
     );
@@ -44,7 +46,7 @@ const PageIcon: React.FC<AssetProps> = ({ block, className, big }) => {
           className,
           big ? "notion-page-icon-cover" : "notion-page-icon"
         )}
-        role="image"
+        role="img"
         aria-label={icon}
       >
         {icon}

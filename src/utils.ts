@@ -44,7 +44,10 @@ export const getListNumber = (blockId: string, blockMap: BlockMapType) => {
 };
 
 export const toNotionImageUrl = (url: string) => {
-  return `https://notion.so${
+  const notionImageUrl = `https://www.notion.so${
     url.startsWith("/image") ? url : `/image/${encodeURIComponent(url)}`
   }`;
+
+  // Our proxy uses Cloudflare's global CDN to cache these image assets
+  return `https://ssfy.io/${encodeURIComponent(notionImageUrl)}`;
 };

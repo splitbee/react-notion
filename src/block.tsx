@@ -3,11 +3,13 @@ import {
   DecorationType,
   BlockType,
   ContentValueType,
-  BlockMapType
+  BlockMapType,
+  MapPageUrl
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 import PageIcon from "./components/page-icon";
+import PageHeader from "./components/page-header";
 import {
   classNames,
   getTextContent,
@@ -55,20 +57,28 @@ export const renderChildText = (properties: DecorationType[]) => {
   });
 };
 
-export type MapPageUrl = (pageId: string) => string;
-
 interface Block {
   block: BlockType;
   level: number;
   blockMap: BlockMapType;
+  mapPageUrl: MapPageUrl;
 
   fullPage?: boolean;
-  mapPageUrl?: MapPageUrl;
+  zoom?: any;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, children, level, fullPage, blockMap } = props;
+  const {
+    block,
+    children,
+    level,
+    fullPage,
+    blockMap,
+    zoom,
+    mapPageUrl
+  } = props;
   const blockValue = block?.value;
+
   switch (blockValue?.type) {
     case "page":
       if (level === 0) {
@@ -88,51 +98,58 @@ export const Block: React.FC<Block> = props => {
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
 
           return (
-            <div className="notion">
-              {page_cover && (
-                <img
-                  src={toNotionImageUrl(page_cover)}
-                  alt={getTextContent(blockValue.properties.title)}
-                  className="notion-page-cover"
-                  style={{
-                    objectPosition: `center ${coverPosition}%`
-                  }}
-                />
-              )}
-              <div
-                className={classNames(
-                  "notion-page",
-                  !page_cover && "notion-page-offset",
-                  page_full_width && "notion-full-width",
-                  page_small_text && "notion-small-text"
-                )}
-              >
-                {page_icon && (
-                  <PageIcon
-                    className={
-                      page_cover ? "notion-page-icon-offset" : undefined
-                    }
-                    block={block}
-                    big
-                  />
-                )}
-                <div className="notion-title">
-                  {renderChildText(blockValue.properties.title)}
+            <div className="notion notion-app">
+              <div className="notion-cursor-listener">
+                <div className="notion-frame">
+                  <PageHeader blockMap={blockMap} mapPageUrl={mapPageUrl} />
+
+                  <div className="notion-scroller">
+                    {page_cover && (
+                      <img
+                        src={toNotionImageUrl(page_cover)}
+                        alt={getTextContent(blockValue.properties.title)}
+                        className="notion-page-cover"
+                        style={{
+                          objectPosition: `center ${coverPosition}%`
+                        }}
+                      />
+                    )}
+                    <main
+                      className={classNames(
+                        "notion-page",
+                        !page_cover && "notion-page-offset",
+                        page_full_width && "notion-full-width",
+                        page_small_text && "notion-small-text"
+                      )}
+                    >
+                      {page_icon && (
+                        <PageIcon
+                          className={
+                            page_cover ? "notion-page-icon-offset" : undefined
+                          }
+                          block={block}
+                          big
+                        />
+                      )}
+
+                      <div className="notion-title">
+                        {renderChildText(blockValue.properties.title)}
+                      </div>
+
+                      {children}
+                    </main>
+                  </div>
                 </div>
-                {children}
               </div>
             </div>
           );
         } else {
-          return <div className="notion">{children}</div>;
+          return <main className="notion">{children}</main>;
         }
       } else {
         if (!blockValue.properties) return null;
         return (
-          <a
-            className="notion-page-link"
-            href={props.mapPageUrl?.(blockValue.id) || `/${blockValue.id}`}
-          >
+          <a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
             {blockValue.format && (
               <div className="notion-page-icon">
                 <PageIcon block={block} />
@@ -169,7 +186,7 @@ export const Block: React.FC<Block> = props => {
       return <hr className="notion-hr" />;
     case "text":
       if (!blockValue.properties) {
-        return <div className="notion-blank" />;
+        return <div className="notion-blank">&nbsp;</div>;
       }
       const blockColor = blockValue.format?.block_color;
       return (
@@ -226,7 +243,8 @@ export const Block: React.FC<Block> = props => {
           className="notion-asset-wrapper"
           style={{ width: value.format.block_width }}
         >
-          <Asset block={block} />
+          <Asset block={block} zoom={zoom} />
+
           {value.properties.caption && (
             <figcaption className="notion-image-caption">
               {renderChildText(value.properties.caption)}

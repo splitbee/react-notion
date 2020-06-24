@@ -23,6 +23,8 @@ interface BaseValueType {
   created_by_id: string;
   last_edited_by_table: string;
   last_edited_by_id: string;
+  space_id?: string;
+  properties?: any;
   content?: string[];
 }
 
@@ -318,3 +320,5 @@ export interface LoadPageChunkData {
     stack: any[];
   };
 }
+
+export type MapPageUrl = (pageId: string) => string;
