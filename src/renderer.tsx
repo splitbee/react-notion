@@ -1,32 +1,25 @@
 import React from "react";
 import mediumZoom from "medium-zoom";
-import { BlockMapType, MapPageUrl } from "./types";
+import { BlockMapType, MapPageUrl, MapImageUrl } from "./types";
 import { Block } from "./block";
+import { defaultMapImageUrl, defaultMapPageUrl } from "utils";
 
 export interface NotionRendererProps {
   blockMap: BlockMapType;
   fullPage?: boolean;
   mapPageUrl?: MapPageUrl;
-  rootPageId?: string;
+  mapImageUrl?: MapImageUrl;
 
   currentId?: string;
   level?: number;
   zoom?: any;
 }
 
-const defaultMapPageUrl = (rootPageId?: string) => (pageId = "") => {
-  pageId = pageId.replace(/-/g, "");
-
-  if (rootPageId && pageId === rootPageId) {
-    return "/";
-  } else {
-    return `/${pageId}`;
-  }
-};
-
 export const NotionRenderer: React.FC<NotionRendererProps> = ({
   level = 0,
   currentId,
+  mapPageUrl = defaultMapPageUrl,
+  mapImageUrl = defaultMapImageUrl,
   ...props
 }) => {
   const { blockMap } = props;
@@ -40,7 +33,6 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
     return null;
   }
 
-  const mapPageUrl = props.mapPageUrl || defaultMapPageUrl(props.rootPageId);
   const zoom =
     props.zoom ||
     (typeof window !== "undefined" &&
@@ -57,6 +49,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
       block={currentBlock}
       zoom={zoom}
       mapPageUrl={mapPageUrl}
+      mapImageUrl={mapImageUrl}
       {...props}
     >
       {currentBlock?.value?.content?.map(contentId => (
@@ -66,6 +59,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
           level={level + 1}
           zoom={zoom}
           mapPageUrl={mapPageUrl}
+          mapImageUrl={mapImageUrl}
           {...props}
         />
       ))}

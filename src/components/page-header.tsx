@@ -1,14 +1,19 @@
 import * as React from "react";
 
-import { BlockMapType, MapPageUrl } from "../types";
+import { BlockMapType, MapPageUrl, MapImageUrl } from "../types";
 import PageIcon from "./page-icon";
 
 interface PageHeaderProps {
   blockMap: BlockMapType;
   mapPageUrl: MapPageUrl;
+  mapImageUrl: MapImageUrl;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ blockMap, mapPageUrl }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({
+  blockMap,
+  mapPageUrl,
+  mapImageUrl
+}) => {
   const blockIds = Object.keys(blockMap);
   const activePageId = blockIds[0];
 
@@ -69,6 +74,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ blockMap, mapPageUrl }) => {
                   <PageIcon
                     className="notion-nav-icon"
                     block={breadcrumb.block}
+                    mapImageUrl={mapImageUrl}
                   />
                 )}
 

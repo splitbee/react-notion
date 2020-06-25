@@ -1,10 +1,13 @@
 import * as React from "react";
-import { BlockType, ContentValueType } from "../types";
-import { toNotionImageUrl } from "../utils";
+import { BlockType, ContentValueType, MapImageUrl } from "../types";
 
 const types = ["video", "image", "embed"];
 
-const Asset: React.FC<{ block: BlockType; zoom?: any }> = ({ block, zoom }) => {
+const Asset: React.FC<{
+  block: BlockType;
+  mapImageUrl: MapImageUrl;
+  zoom?: any;
+}> = ({ block, mapImageUrl, zoom }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null);
   const value = block.value as ContentValueType;
   const type = block.value.type;
@@ -36,7 +39,7 @@ const Asset: React.FC<{ block: BlockType; zoom?: any }> = ({ block, zoom }) => {
     );
   }
 
-  const src = toNotionImageUrl(value.properties.source[0][0]);
+  const src = mapImageUrl(value.properties.source[0][0]);
 
   function attachZoom(image: any) {
     if (zoomRef.current) {

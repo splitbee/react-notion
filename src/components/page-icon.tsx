@@ -3,9 +3,10 @@ import {
   BlockType,
   PageValueType,
   BlockValueType,
-  CalloutValueType
+  CalloutValueType,
+  MapImageUrl
 } from "../types";
-import { toNotionImageUrl, getTextContent, classNames } from "../utils";
+import { getTextContent, classNames } from "../utils";
 
 const isIconBlock = (
   value: BlockValueType
@@ -15,11 +16,17 @@ const isIconBlock = (
 
 interface AssetProps {
   block: BlockType;
+  mapImageUrl: MapImageUrl;
   big?: boolean;
   className?: string;
 }
 
-const PageIcon: React.FC<AssetProps> = ({ block, className, big }) => {
+const PageIcon: React.FC<AssetProps> = ({
+  block,
+  className,
+  big,
+  mapImageUrl
+}) => {
   if (!isIconBlock(block.value)) {
     return null;
   }
@@ -27,7 +34,7 @@ const PageIcon: React.FC<AssetProps> = ({ block, className, big }) => {
   const title = block.value.properties?.title;
 
   if (icon?.includes("http")) {
-    const url = toNotionImageUrl(icon);
+    const url = mapImageUrl(icon);
 
     return (
       <img

@@ -4,18 +4,14 @@ import {
   BlockType,
   ContentValueType,
   BlockMapType,
-  MapPageUrl
+  MapPageUrl,
+  MapImageUrl
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 import PageIcon from "./components/page-icon";
 import PageHeader from "./components/page-header";
-import {
-  classNames,
-  getTextContent,
-  getListNumber,
-  toNotionImageUrl
-} from "./utils";
+import { classNames, getTextContent, getListNumber } from "./utils";
 
 export const renderChildText = (properties: DecorationType[]) => {
   return properties?.map(([text, decorations], i) => {
@@ -62,6 +58,7 @@ interface Block {
   level: number;
   blockMap: BlockMapType;
   mapPageUrl: MapPageUrl;
+  mapImageUrl: MapImageUrl;
 
   fullPage?: boolean;
   zoom?: any;
@@ -75,7 +72,8 @@ export const Block: React.FC<Block> = props => {
     fullPage,
     blockMap,
     zoom,
-    mapPageUrl
+    mapPageUrl,
+    mapImageUrl
   } = props;
   const blockValue = block?.value;
 
@@ -101,12 +99,16 @@ export const Block: React.FC<Block> = props => {
             <div className="notion notion-app">
               <div className="notion-cursor-listener">
                 <div className="notion-frame">
-                  <PageHeader blockMap={blockMap} mapPageUrl={mapPageUrl} />
+                  <PageHeader
+                    blockMap={blockMap}
+                    mapPageUrl={mapPageUrl}
+                    mapImageUrl={mapImageUrl}
+                  />
 
                   <div className="notion-scroller">
                     {page_cover && (
                       <img
-                        src={toNotionImageUrl(page_cover)}
+                        src={mapImageUrl(page_cover)}
                         alt={getTextContent(blockValue.properties.title)}
                         className="notion-page-cover"
                         style={{
@@ -129,6 +131,7 @@ export const Block: React.FC<Block> = props => {
                           }
                           block={block}
                           big
+                          mapImageUrl={mapImageUrl}
                         />
                       )}
 
@@ -152,7 +155,7 @@ export const Block: React.FC<Block> = props => {
           <a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
             {blockValue.format && (
               <div className="notion-page-icon">
-                <PageIcon block={block} />
+                <PageIcon block={block} mapImageUrl={mapImageUrl} />
               </div>
             )}
             <div className="notion-page-text">
@@ -243,7 +246,7 @@ export const Block: React.FC<Block> = props => {
           className="notion-asset-wrapper"
           style={{ width: value.format.block_width }}
         >
-          <Asset block={block} zoom={zoom} />
+          <Asset block={block} zoom={zoom} mapImageUrl={mapImageUrl} />
 
           {value.properties.caption && (
             <figcaption className="notion-image-caption">
@@ -373,7 +376,7 @@ export const Block: React.FC<Block> = props => {
           )}
         >
           <div>
-            <PageIcon block={block} />
+            <PageIcon block={block} mapImageUrl={mapImageUrl} />
           </div>
           <div className="notion-callout-text">
             {renderChildText(blockValue.properties.title)}

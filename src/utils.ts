@@ -43,11 +43,14 @@ export const getListNumber = (blockId: string, blockMap: BlockMapType) => {
   return group.indexOf(blockId) + 1;
 };
 
-export const toNotionImageUrl = (url: string) => {
-  const notionImageUrl = `https://www.notion.so${
-    url.startsWith("/image") ? url : `/image/${encodeURIComponent(url)}`
+export const defaultMapImageUrl = (image: string = "") => {
+  return `https://www.notion.so${
+    image.startsWith("/image") ? image : `/image/${encodeURIComponent(image)}`
   }`;
+};
 
-  // Our proxy uses Cloudflare's global CDN to cache these image assets
-  return `https://ssfy.io/${encodeURIComponent(notionImageUrl)}`;
+export const defaultMapPageUrl = (pageId: string = "") => {
+  pageId = pageId.replace(/-/g, "");
+
+  return `/${pageId}`;
 };
