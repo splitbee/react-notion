@@ -267,6 +267,84 @@ export const Block: React.FC<Block> = props => {
           {renderChildText(blockValue.properties.title)}
         </blockquote>
       );
+    case "collection_view":
+      if (!block) return null;
+      const collectionView = block?.collection?.types[0];
+
+      return (
+        <div>
+          <h3 className="notion-h3">
+            {renderChildText(block.collection?.title!)}
+          </h3>
+          {collectionView?.type === "table" && (
+            <div style={{ maxWidth: "100%", marginTop: 5 }}>
+              <table className="notion-table">
+                <thead>
+                  <tr className="notion-tr">
+                    {collectionView.format?.table_properties
+                      ?.filter(p => p.visible)
+                      .map(gp => (
+                        <th
+                          className="notion-th"
+                          style={{ minWidth: gp.width }}
+                        >
+                          {block.collection?.schema[gp.property].name}
+                        </th>
+                      ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block?.collection?.data.map(row => (
+                    <tr className="notion-tr">
+                      {collectionView.format?.table_properties
+                        ?.filter(p => p.visible)
+                        .map(gp => (
+                          <td
+                            className={
+                              "notion-td " +
+                              (gp.property === "title" ? "notion-bold" : "")
+                            }
+                          >
+                            {
+                              renderChildText(
+                                row[block.collection?.schema[gp.property].name!]
+                              )!
+                            }
+                          </td>
+                        ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {collectionView?.type === "gallery" && (
+            <div className="notion-gallery">
+              {block.collection?.data.map((row, i) => (
+                <div key={`col-${i}`} className="notion-gallery-card">
+                  <div className="notion-gallery-content">
+                    {collectionView.format?.gallery_properties
+                      ?.filter(p => p.visible)
+                      .map((gp, idx) => (
+                        <p
+                          key={idx + "item"}
+                          className={
+                            "notion-gallery-data " +
+                            (idx === 0 ? "is-first" : "")
+                          }
+                        >
+                          {getTextContent(
+                            row[block.collection?.schema[gp.property].name!]
+                          )}
+                        </p>
+                      ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
     case "callout":
       return (
         <div
