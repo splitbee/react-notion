@@ -117,6 +117,17 @@ Most common block types are supported. We happily accept pull requests to add su
 | Checkbox          | ❌ Missing |                        |
 | Table Of Contents | ❌ Missing |                        |
 
+## Block Type Specific Caveats
+
+When using a code block in your Notion page, `NotionRenderer` will use `prismjs` to detect the language of the code block.
+By default in most project, `prismjs` won't include all language packages in the minified build of your project.
+This tends to be an issue for those using `react-notion` in a `next.js` project.
+To ensure the programming language is correctly highlighted in production builds, one should explicitly imported into the project.
+
+```jsx
+import 'prismjs/components/prism-{language}';
+```
+
 ## Credits
 
 - [Tobias Lins](https://tobi.sh) – Idea, Code
