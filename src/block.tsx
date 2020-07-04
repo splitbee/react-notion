@@ -285,6 +285,13 @@ export const Block: React.FC<Block> = props => {
         </div>
       );
     case "bookmark":
+      const link = blockValue.properties.link
+      const title = blockValue.properties.title ?? link
+      const description = blockValue.properties.description
+      const block_color = blockValue.format?.block_color
+      const bookmark_icon = blockValue.format?.bookmark_icon
+      const bookmark_cover = blockValue.format?.bookmark_cover
+          
       return (
         <div className="notion-row">
           <a
@@ -292,32 +299,39 @@ export const Block: React.FC<Block> = props => {
             rel="noopener noreferrer"
             className={classNames(
               "notion-bookmark",
-              blockValue.format.block_color &&
-                `notion-${blockValue.format.block_color}`
+              block_color &&
+                `notion-${block_color}`
             )}
-            href={blockValue.properties.link[0][0]}
+            href={link[0][0]}
           >
             <div>
               <div className="notion-bookmark-title">
-                {renderChildText(blockValue.properties.title)}
+                {renderChildText(title)}
               </div>
-              <div className="notion-bookmark-description">
-                {renderChildText(blockValue.properties.description)}
-              </div>
+              {description && (
+                <div className="notion-bookmark-description">
+                  {renderChildText(description)}
+                </div>
+              )}
+              
               <div className="notion-bookmark-link">
-                <img
-                  src={blockValue.format.bookmark_icon}
-                  alt={getTextContent(blockValue.properties.title)}
-                />
-                <div>{renderChildText(blockValue.properties.link)}</div>
+                {bookmark_icon && (
+                  <img
+                  src={bookmark_icon}
+                  alt={getTextContent(title)}
+                  />
+                )}
+                <div>{renderChildText(link)}</div>
               </div>
             </div>
-            <div className="notion-bookmark-image">
-              <img
-                src={blockValue.format.bookmark_cover}
-                alt={getTextContent(blockValue.properties.title)}
-              />
-            </div>
+            {bookmark_cover && (
+              <div className="notion-bookmark-image">
+                <img
+                  src={bookmark_cover}
+                  alt={getTextContent(title)}
+                />
+              </div>
+            )}
           </a>
         </div>
       );
