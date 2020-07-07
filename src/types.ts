@@ -110,10 +110,10 @@ interface BookmarkValueType extends BaseValueType {
   type: "bookmark";
   properties: {
     link: DecorationType[];
-    title: DecorationType[];
-    description: DecorationType[];
+    title?: DecorationType[];
+    description?: DecorationType[];
   };
-  format: {
+  format?: {
     block_color?: string;
     bookmark_icon: string;
     bookmark_cover: string;
