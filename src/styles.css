@@ -193,7 +193,7 @@ img.notion-page-icon-offset {
 .notion-hr {
   margin: 6px 0px;
   padding: 0;
-  border-top: none;
+  border-top-width: 1px;
   border-color: rgba(55, 53, 47, 0.09);
 }
 .notion-link {
