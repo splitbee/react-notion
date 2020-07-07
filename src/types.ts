@@ -110,10 +110,10 @@ interface BookmarkValueType extends BaseValueType {
   type: "bookmark";
   properties: {
     link: DecorationType[];
-    title: DecorationType[];
-    description: DecorationType[];
+    title?: DecorationType[];
+    description?: DecorationType[];
   };
-  format: {
+  format?: {
     block_color?: string;
     bookmark_icon: string;
     bookmark_cover: string;
@@ -223,6 +223,33 @@ interface CodeValueType extends BaseValueType {
     language: DecorationType[];
   };
 }
+interface CollectionValueType extends ContentValueType {
+  type: "collection_view";
+}
+
+interface TableGalleryType extends BaseValueType {
+  type: "gallery";
+  format: {
+    gallery_cover: {
+      type: "page_cover";
+    };
+    gallery_cover_aspect: "cover";
+    gallery_properties: Array<{ visible: boolean; property: string }>;
+  };
+}
+interface TableCollectionType extends BaseValueType {
+  type: "table";
+  format: {
+    table_wrap: boolean;
+    table_properties: Array<{
+      visible: boolean;
+      property: string;
+      width: number;
+    }>;
+  };
+}
+
+export type CollectionViewType = TableGalleryType | TableCollectionType;
 
 /**
  * The different block values a block can have.
@@ -246,11 +273,18 @@ export type BlockValueType =
   | EmbedValueType
   | CalloutValueType
   | BookmarkValueType
-  | ToggleValueType;
+  | ToggleValueType
+  | CollectionValueType;
 
 export interface BlockType {
   role: string;
   value: BlockValueType;
+  collection?: {
+    title: DecorationType[];
+    types: CollectionViewType[];
+    data: Array<{ [key: string]: DecorationType[] }>;
+    schema: { [key: string]: { name: string; type: string } };
+  };
 }
 
 export interface NotionUserType {
