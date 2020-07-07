@@ -363,13 +363,13 @@ export const Block: React.FC<Block> = props => {
         </div>
       );
     case "bookmark":
-      const link = blockValue.properties.link
-      const title = blockValue.properties.title ?? link
-      const description = blockValue.properties.description
-      const block_color = blockValue.format?.block_color
-      const bookmark_icon = blockValue.format?.bookmark_icon
-      const bookmark_cover = blockValue.format?.bookmark_cover
-          
+      const link = blockValue.properties.link;
+      const title = blockValue.properties.title ?? link;
+      const description = blockValue.properties.description;
+      const block_color = blockValue.format?.block_color;
+      const bookmark_icon = blockValue.format?.bookmark_icon;
+      const bookmark_cover = blockValue.format?.bookmark_cover;
+
       return (
         <div className="notion-row">
           <a
@@ -377,8 +377,7 @@ export const Block: React.FC<Block> = props => {
             rel="noopener noreferrer"
             className={classNames(
               "notion-bookmark",
-              block_color &&
-                `notion-${block_color}`
+              block_color && `notion-${block_color}`
             )}
             href={link[0][0]}
           >
@@ -391,23 +390,17 @@ export const Block: React.FC<Block> = props => {
                   {renderChildText(description)}
                 </div>
               )}
-              
+
               <div className="notion-bookmark-link">
                 {bookmark_icon && (
-                  <img
-                  src={bookmark_icon}
-                  alt={getTextContent(title)}
-                  />
+                  <img src={bookmark_icon} alt={getTextContent(title)} />
                 )}
                 <div>{renderChildText(link)}</div>
               </div>
             </div>
             {bookmark_cover && (
               <div className="notion-bookmark-image">
-                <img
-                  src={bookmark_cover}
-                  alt={getTextContent(title)}
-                />
+                <img src={bookmark_cover} alt={getTextContent(title)} />
               </div>
             )}
           </a>
