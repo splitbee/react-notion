@@ -61,6 +61,7 @@ interface Block {
   mapImageUrl: MapImageUrl;
 
   fullPage?: boolean;
+  hideHeader?: boolean;
 }
 
 export const Block: React.FC<Block> = props => {
@@ -69,6 +70,7 @@ export const Block: React.FC<Block> = props => {
     children,
     level,
     fullPage,
+    hideHeader,
     blockMap,
     mapPageUrl,
     mapImageUrl
@@ -97,11 +99,13 @@ export const Block: React.FC<Block> = props => {
             <div className="notion notion-app">
               <div className="notion-cursor-listener">
                 <div className="notion-frame">
-                  <PageHeader
-                    blockMap={blockMap}
-                    mapPageUrl={mapPageUrl}
-                    mapImageUrl={mapImageUrl}
-                  />
+                  {!hideHeader && (
+                    <PageHeader
+                      blockMap={blockMap}
+                      mapPageUrl={mapPageUrl}
+                      mapImageUrl={mapImageUrl}
+                    />
+                  )}
 
                   <div className="notion-scroller">
                     {page_cover && (
