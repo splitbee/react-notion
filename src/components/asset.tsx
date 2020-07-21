@@ -1,10 +1,12 @@
 import * as React from "react";
-import { BlockType, ContentValueType } from "../types";
-import { toNotionImageUrl } from "../utils";
+import { BlockType, ContentValueType, MapImageUrl } from "../types";
 
 const types = ["video", "image", "embed"];
 
-const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
+const Asset: React.FC<{
+  block: BlockType;
+  mapImageUrl: MapImageUrl;
+}> = ({ block, mapImageUrl }) => {
   const value = block.value as ContentValueType;
   const type = block.value.type;
 
@@ -35,10 +37,11 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
     );
   }
 
-  const src = toNotionImageUrl(value.properties.source[0][0]);
+  const src = mapImageUrl(value.properties.source[0][0]);
 
   if (type === "image") {
     const caption = value.properties.caption?.[0][0];
+
     if (block_aspect_ratio) {
       return (
         <div
@@ -47,7 +50,11 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
             position: "relative"
           }}
         >
-          <img className="notion-image-inset" alt={caption} src={src} />
+          <img
+            className="notion-image-inset"
+            alt={caption || "notion image"}
+            src={src}
+          />
         </div>
       );
     } else {

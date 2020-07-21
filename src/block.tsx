@@ -3,17 +3,15 @@ import {
   DecorationType,
   BlockType,
   ContentValueType,
-  BlockMapType
+  BlockMapType,
+  MapPageUrl,
+  MapImageUrl
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
 import PageIcon from "./components/page-icon";
-import {
-  classNames,
-  getTextContent,
-  getListNumber,
-  toNotionImageUrl
-} from "./utils";
+import PageHeader from "./components/page-header";
+import { classNames, getTextContent, getListNumber } from "./utils";
 
 export const renderChildText = (properties: DecorationType[]) => {
   return properties?.map(([text, decorations], i) => {
@@ -55,20 +53,30 @@ export const renderChildText = (properties: DecorationType[]) => {
   });
 };
 
-export type MapPageUrl = (pageId: string) => string;
-
 interface Block {
   block: BlockType;
   level: number;
   blockMap: BlockMapType;
+  mapPageUrl: MapPageUrl;
+  mapImageUrl: MapImageUrl;
 
   fullPage?: boolean;
-  mapPageUrl?: MapPageUrl;
+  hideHeader?: boolean;
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, children, level, fullPage, blockMap } = props;
+  const {
+    block,
+    children,
+    level,
+    fullPage,
+    hideHeader,
+    blockMap,
+    mapPageUrl,
+    mapImageUrl
+  } = props;
   const blockValue = block?.value;
+
   switch (blockValue?.type) {
     case "page":
       if (level === 0) {
@@ -88,54 +96,68 @@ export const Block: React.FC<Block> = props => {
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
 
           return (
-            <div className="notion">
-              {page_cover && (
-                <img
-                  src={toNotionImageUrl(page_cover)}
-                  alt={getTextContent(blockValue.properties.title)}
-                  className="notion-page-cover"
-                  style={{
-                    objectPosition: `center ${coverPosition}%`
-                  }}
-                />
-              )}
-              <div
-                className={classNames(
-                  "notion-page",
-                  !page_cover && "notion-page-offset",
-                  page_full_width && "notion-full-width",
-                  page_small_text && "notion-small-text"
-                )}
-              >
-                {page_icon && (
-                  <PageIcon
-                    className={
-                      page_cover ? "notion-page-icon-offset" : undefined
-                    }
-                    block={block}
-                    big
-                  />
-                )}
-                <div className="notion-title">
-                  {renderChildText(blockValue.properties.title)}
+            <div className="notion notion-app">
+              <div className="notion-cursor-listener">
+                <div className="notion-frame">
+                  {!hideHeader && (
+                    <PageHeader
+                      blockMap={blockMap}
+                      mapPageUrl={mapPageUrl}
+                      mapImageUrl={mapImageUrl}
+                    />
+                  )}
+
+                  <div className="notion-scroller">
+                    {page_cover && (
+                      <img
+                        src={mapImageUrl(page_cover)}
+                        alt={getTextContent(blockValue.properties.title)}
+                        className="notion-page-cover"
+                        style={{
+                          objectPosition: `center ${coverPosition}%`
+                        }}
+                      />
+                    )}
+                    <main
+                      className={classNames(
+                        "notion-page",
+                        !page_cover && "notion-page-offset",
+                        page_full_width && "notion-full-width",
+                        page_small_text && "notion-small-text"
+                      )}
+                    >
+                      {page_icon && (
+                        <PageIcon
+                          className={
+                            page_cover ? "notion-page-icon-offset" : undefined
+                          }
+                          block={block}
+                          big
+                          mapImageUrl={mapImageUrl}
+                        />
+                      )}
+
+                      <div className="notion-title">
+                        {renderChildText(blockValue.properties.title)}
+                      </div>
+
+                      {children}
+                    </main>
+                  </div>
                 </div>
-                {children}
               </div>
             </div>
           );
         } else {
-          return <div className="notion">{children}</div>;
+          return <main className="notion">{children}</main>;
         }
       } else {
         if (!blockValue.properties) return null;
         return (
-          <a
-            className="notion-page-link"
-            href={props.mapPageUrl?.(blockValue.id) || `/${blockValue.id}`}
-          >
+          <a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
             {blockValue.format && (
               <div className="notion-page-icon">
-                <PageIcon block={block} />
+                <PageIcon block={block} mapImageUrl={mapImageUrl} />
               </div>
             )}
             <div className="notion-page-text">
@@ -169,7 +191,7 @@ export const Block: React.FC<Block> = props => {
       return <hr className="notion-hr" />;
     case "text":
       if (!blockValue.properties) {
-        return <div className="notion-blank" />;
+        return <div className="notion-blank">&nbsp;</div>;
       }
       const blockColor = blockValue.format?.block_color;
       return (
@@ -226,7 +248,8 @@ export const Block: React.FC<Block> = props => {
           className="notion-asset-wrapper"
           style={{ width: value.format.block_width }}
         >
-          <Asset block={block} />
+          <Asset block={block} mapImageUrl={mapImageUrl} />
+
           {value.properties.caption && (
             <figcaption className="notion-image-caption">
               {renderChildText(value.properties.caption)}
@@ -269,6 +292,7 @@ export const Block: React.FC<Block> = props => {
       );
     case "collection_view":
       if (!block) return null;
+
       const collectionView = block?.collection?.types[0];
 
       return (
@@ -276,6 +300,7 @@ export const Block: React.FC<Block> = props => {
           <h3 className="notion-h3">
             {renderChildText(block.collection?.title!)}
           </h3>
+
           {collectionView?.type === "table" && (
             <div style={{ maxWidth: "100%", marginTop: 5 }}>
               <table className="notion-table">
@@ -283,23 +308,26 @@ export const Block: React.FC<Block> = props => {
                   <tr className="notion-tr">
                     {collectionView.format?.table_properties
                       ?.filter(p => p.visible)
-                      .map(gp => (
+                      .map((gp, index) => (
                         <th
                           className="notion-th"
+                          key={index}
                           style={{ minWidth: gp.width }}
                         >
-                          {block.collection?.schema[gp.property].name}
+                          {block.collection?.schema[gp.property]?.name}
                         </th>
                       ))}
                   </tr>
                 </thead>
+
                 <tbody>
-                  {block?.collection?.data.map(row => (
-                    <tr className="notion-tr">
+                  {block?.collection?.data.map((row, index) => (
+                    <tr className="notion-tr" key={index}>
                       {collectionView.format?.table_properties
                         ?.filter(p => p.visible)
-                        .map(gp => (
+                        .map((gp, index) => (
                           <td
+                            key={index}
                             className={
                               "notion-td " +
                               (gp.property === "title" ? "notion-bold" : "")
@@ -307,7 +335,9 @@ export const Block: React.FC<Block> = props => {
                           >
                             {
                               renderChildText(
-                                row[block.collection?.schema[gp.property].name!]
+                                row[
+                                  block.collection?.schema[gp.property]?.name!
+                                ]
                               )!
                             }
                           </td>
@@ -318,6 +348,7 @@ export const Block: React.FC<Block> = props => {
               </table>
             </div>
           )}
+
           {collectionView?.type === "gallery" && (
             <div className="notion-gallery">
               {block.collection?.data.map((row, i) => (
@@ -355,7 +386,7 @@ export const Block: React.FC<Block> = props => {
           )}
         >
           <div>
-            <PageIcon block={block} />
+            <PageIcon block={block} mapImageUrl={mapImageUrl} />
           </div>
           <div className="notion-callout-text">
             {renderChildText(blockValue.properties.title)}

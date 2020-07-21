@@ -6,8 +6,8 @@ const Code: React.FC<{ code: string; language: string }> = ({
   code,
   language = "javascript"
 }) => {
-  const prismLanguage =
-    languages[language.toLowerCase()] || languages.javascript;
+  const languageL = language.toLowerCase();
+  const prismLanguage = languages[languageL] || languages.javascript;
 
   const langClass = `language-${language.toLowerCase()}`;
 

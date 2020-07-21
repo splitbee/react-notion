@@ -15,7 +15,7 @@ const groupBlockContent = (blockMap: BlockMapType): string[][] => {
 
   Object.keys(blockMap).forEach(id => {
     blockMap[id].value.content?.forEach(blockId => {
-      const blockType = blockMap[blockId]?.value.type;
+      const blockType = blockMap[blockId]?.value?.type;
 
       if (blockType && blockType !== lastType) {
         index++;
@@ -43,8 +43,14 @@ export const getListNumber = (blockId: string, blockMap: BlockMapType) => {
   return group.indexOf(blockId) + 1;
 };
 
-export const toNotionImageUrl = (url: string) => {
-  return `https://notion.so${
-    url.startsWith("/image") ? url : `/image/${encodeURIComponent(url)}`
+export const defaultMapImageUrl = (image: string = "") => {
+  return `https://www.notion.so${
+    image.startsWith("/image") ? image : `/image/${encodeURIComponent(image)}`
   }`;
+};
+
+export const defaultMapPageUrl = (pageId: string = "") => {
+  pageId = pageId.replace(/-/g, "");
+
+  return `/${pageId}`;
 };
