@@ -476,6 +476,7 @@ img.notion-page-icon {
 }
 
 .notion-table {
+  width: 100%;
   border-left: none;
   border-right: none;
   border-spacing: 0px;

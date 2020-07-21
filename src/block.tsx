@@ -269,6 +269,7 @@ export const Block: React.FC<Block> = props => {
       );
     case "collection_view":
       if (!block) return null;
+
       const collectionView = block?.collection?.types[0];
 
       return (
@@ -276,6 +277,7 @@ export const Block: React.FC<Block> = props => {
           <h3 className="notion-h3">
             {renderChildText(block.collection?.title!)}
           </h3>
+
           {collectionView?.type === "table" && (
             <div style={{ maxWidth: "100%", marginTop: 5 }}>
               <table className="notion-table">
@@ -283,23 +285,26 @@ export const Block: React.FC<Block> = props => {
                   <tr className="notion-tr">
                     {collectionView.format?.table_properties
                       ?.filter(p => p.visible)
-                      .map(gp => (
+                      .map((gp, index) => (
                         <th
                           className="notion-th"
+                          key={index}
                           style={{ minWidth: gp.width }}
                         >
-                          {block.collection?.schema[gp.property].name}
+                          {block.collection?.schema[gp.property]?.name}
                         </th>
                       ))}
                   </tr>
                 </thead>
+
                 <tbody>
-                  {block?.collection?.data.map(row => (
-                    <tr className="notion-tr">
+                  {block?.collection?.data.map((row, index) => (
+                    <tr className="notion-tr" key={index}>
                       {collectionView.format?.table_properties
                         ?.filter(p => p.visible)
-                        .map(gp => (
+                        .map((gp, index) => (
                           <td
+                            key={index}
                             className={
                               "notion-td " +
                               (gp.property === "title" ? "notion-bold" : "")
@@ -307,7 +312,9 @@ export const Block: React.FC<Block> = props => {
                           >
                             {
                               renderChildText(
-                                row[block.collection?.schema[gp.property].name!]
+                                row[
+                                  block.collection?.schema[gp.property]?.name!
+                                ]
                               )!
                             }
                           </td>
@@ -318,6 +325,7 @@ export const Block: React.FC<Block> = props => {
               </table>
             </div>
           )}
+
           {collectionView?.type === "gallery" && (
             <div className="notion-gallery">
               {block.collection?.data.map((row, i) => (
