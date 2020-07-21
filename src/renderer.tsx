@@ -1,8 +1,7 @@
 import React from "react";
-import mediumZoom from "medium-zoom";
 import { BlockMapType, MapPageUrl, MapImageUrl } from "./types";
 import { Block } from "./block";
-import { defaultMapImageUrl, defaultMapPageUrl } from "utils";
+import { defaultMapImageUrl, defaultMapPageUrl } from "./utils";
 
 export interface NotionRendererProps {
   blockMap: BlockMapType;
@@ -12,7 +11,6 @@ export interface NotionRendererProps {
 
   currentId?: string;
   level?: number;
-  zoom?: any;
 }
 
 export const NotionRenderer: React.FC<NotionRendererProps> = ({
@@ -33,21 +31,11 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
     return null;
   }
 
-  const zoom =
-    props.zoom ||
-    (typeof window !== "undefined" &&
-      mediumZoom({
-        container: ".notion",
-        background: "rgba(0, 0, 0, 0.8)",
-        margin: getMediumZoomMargin()
-      }));
-
   return (
     <Block
       key={id}
       level={level}
       block={currentBlock}
-      zoom={zoom}
       mapPageUrl={mapPageUrl}
       mapImageUrl={mapImageUrl}
       {...props}
@@ -57,7 +45,6 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
           key={contentId}
           currentId={contentId}
           level={level + 1}
-          zoom={zoom}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImageUrl}
           {...props}
@@ -66,21 +53,3 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
     </Block>
   );
 };
-
-function getMediumZoomMargin() {
-  const width = window.innerWidth;
-
-  if (width < 500) {
-    return 8;
-  } else if (width < 800) {
-    return 20;
-  } else if (width < 1280) {
-    return 30;
-  } else if (width < 1600) {
-    return 40;
-  } else if (width < 1920) {
-    return 48;
-  } else {
-    return 72;
-  }
-}

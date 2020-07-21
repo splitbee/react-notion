@@ -6,9 +6,7 @@ const types = ["video", "image", "embed"];
 const Asset: React.FC<{
   block: BlockType;
   mapImageUrl: MapImageUrl;
-  zoom?: any;
-}> = ({ block, mapImageUrl, zoom }) => {
-  const zoomRef = React.useRef(zoom ? zoom.clone() : null);
+}> = ({ block, mapImageUrl }) => {
   const value = block.value as ContentValueType;
   const type = block.value.type;
 
@@ -41,12 +39,6 @@ const Asset: React.FC<{
 
   const src = mapImageUrl(value.properties.source[0][0]);
 
-  function attachZoom(image: any) {
-    if (zoomRef.current) {
-      (zoomRef.current as any).attach(image);
-    }
-  }
-
   if (type === "image") {
     const caption = value.properties.caption?.[0][0];
 
@@ -62,12 +54,11 @@ const Asset: React.FC<{
             className="notion-image-inset"
             alt={caption || "notion image"}
             src={src}
-            ref={attachZoom}
           />
         </div>
       );
     } else {
-      return <img alt={caption} src={src} ref={attachZoom} />;
+      return <img alt={caption} src={src} />;
     }
   }
 

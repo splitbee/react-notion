@@ -61,7 +61,6 @@ interface Block {
   mapImageUrl: MapImageUrl;
 
   fullPage?: boolean;
-  zoom?: any;
 }
 
 export const Block: React.FC<Block> = props => {
@@ -71,7 +70,6 @@ export const Block: React.FC<Block> = props => {
     level,
     fullPage,
     blockMap,
-    zoom,
     mapPageUrl,
     mapImageUrl
   } = props;
@@ -246,7 +244,7 @@ export const Block: React.FC<Block> = props => {
           className="notion-asset-wrapper"
           style={{ width: value.format.block_width }}
         >
-          <Asset block={block} zoom={zoom} mapImageUrl={mapImageUrl} />
+          <Asset block={block} mapImageUrl={mapImageUrl} />
 
           {value.properties.caption && (
             <figcaption className="notion-image-caption">

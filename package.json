@@ -58,7 +58,6 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "medium-zoom": "^1.0.5",
     "prismjs": "^1.20.0"
   }
 }
