@@ -15,7 +15,7 @@ const groupBlockContent = (blockMap: BlockMapType): string[][] => {
 
   Object.keys(blockMap).forEach(id => {
     blockMap[id].value.content?.forEach(blockId => {
-      const blockType = blockMap[blockId]?.value.type;
+      const blockType = blockMap[blockId]?.value?.type;
 
       if (blockType && blockType !== lastType) {
         index++;
