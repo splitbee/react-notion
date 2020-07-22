@@ -14,7 +14,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-notion": "^0.6.0"
+    "react-notion": "^0.8.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.0",
