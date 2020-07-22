@@ -5,10 +5,16 @@ import { defaultMapImageUrl, defaultMapPageUrl } from "./utils";
 
 export interface NotionRendererProps {
   blockMap: BlockMapType;
-  fullPage?: boolean;
-  hideHeader?: boolean;
+
   mapPageUrl?: MapPageUrl;
   mapImageUrl?: MapImageUrl;
+
+  fullPage?: boolean;
+  hideHeader?: boolean;
+  darkMode?: boolean;
+
+  className?: string;
+  bodyClassName?: string;
 
   currentId?: string;
   level?: number;

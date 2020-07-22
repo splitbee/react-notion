@@ -57,11 +57,16 @@ interface Block {
   block: BlockType;
   level: number;
   blockMap: BlockMapType;
+
   mapPageUrl: MapPageUrl;
   mapImageUrl: MapImageUrl;
 
   fullPage?: boolean;
   hideHeader?: boolean;
+  darkMode?: boolean;
+
+  className?: string;
+  bodyClassName?: string;
 }
 
 export const Block: React.FC<Block> = props => {
@@ -71,9 +76,12 @@ export const Block: React.FC<Block> = props => {
     level,
     fullPage,
     hideHeader,
+    darkMode,
     blockMap,
     mapPageUrl,
-    mapImageUrl
+    mapImageUrl,
+    className,
+    bodyClassName
   } = props;
   const blockValue = block?.value;
 
@@ -96,7 +104,14 @@ export const Block: React.FC<Block> = props => {
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
 
           return (
-            <div className="notion notion-app">
+            <div
+              className={classNames(
+                "notion",
+                "notion-app",
+                darkMode && "notion-dark",
+                className
+              )}
+            >
               <div className="notion-cursor-listener">
                 <div className="notion-frame">
                   {!hideHeader && (
@@ -123,7 +138,8 @@ export const Block: React.FC<Block> = props => {
                         "notion-page",
                         !page_cover && "notion-page-offset",
                         page_full_width && "notion-full-width",
-                        page_small_text && "notion-small-text"
+                        page_small_text && "notion-small-text",
+                        bodyClassName
                       )}
                     >
                       {page_icon && (
@@ -149,7 +165,18 @@ export const Block: React.FC<Block> = props => {
             </div>
           );
         } else {
-          return <main className="notion">{children}</main>;
+          return (
+            <main
+              className={classNames(
+                "notion",
+                darkMode && "notion-dark",
+                className,
+                bodyClassName
+              )}
+            >
+              {children}
+            </main>
+          );
         }
       } else {
         if (!blockValue.properties) return null;

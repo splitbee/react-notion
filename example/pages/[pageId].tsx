@@ -39,16 +39,8 @@ const NotionPage = ({ blockMap }) => {
       <Head>
         <title>{title}</title>
       </Head>
+
       <NotionRenderer blockMap={blockMap} fullPage />
-      <style jsx global>{`
-        div :global(.notion-code) {
-          box-sizing: border-box;
-        }
-        body {
-          padding: 0;
-          margin: 0;
-        }
-      `}</style>
     </>
   );
 };

@@ -14,19 +14,24 @@ export async function getStaticProps() {
   };
 }
 
+const fullPage = false;
+const style = fullPage
+  ? undefined
+  : {
+      maxWidth: 720,
+      margin: "0 auto"
+    };
+
 const Home = ({ blockMap }) => (
-  <div
-    style={{
-      maxWidth: 708,
-      margin: "0 auto",
-      padding: "0 8px",
-      fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"`
-    }}
-  >
+  <div style={style}>
     <Head>
       <title>react-notion example</title>
     </Head>
-    <NotionRenderer blockMap={blockMap} />
+
+    <NotionRenderer blockMap={blockMap} fullPage={fullPage} />
+
+    {/* Alternative example of testing darkMode with fullPage */}
+    {/* <NotionRenderer blockMap={blockMap} fullPage={fullPage} darkMode /> */}
   </div>
 );
 
