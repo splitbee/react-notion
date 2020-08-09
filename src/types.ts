@@ -214,6 +214,11 @@ interface ImageValueType extends ContentValueType {
 interface EmbedValueType extends ContentValueType {
   type: "embed";
 }
+
+interface FigmaValueType extends ContentValueType {
+  type: "figma";
+}
+
 interface VideoValueType extends ContentValueType {
   type: "video";
 }
@@ -273,6 +278,7 @@ export type BlockValueType =
   | ImageValueType
   | VideoValueType
   | EmbedValueType
+  | FigmaValueType
   | CalloutValueType
   | BookmarkValueType
   | ToggleValueType

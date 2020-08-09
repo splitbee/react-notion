@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BlockType, ContentValueType, MapImageUrl } from "../types";
 
-const types = ["video", "image", "embed"];
+const types = ["video", "image", "embed", "figma"];
 
 const Asset: React.FC<{
   block: BlockType;
@@ -23,6 +23,22 @@ const Asset: React.FC<{
   } = format;
 
   const aspectRatio = block_aspect_ratio || block_height / block_width;
+
+  if (type === "figma") {
+    return (
+      <div
+        style={{
+          paddingBottom: `${aspectRatio * 100}%`,
+          position: "relative"
+        }}
+      >
+        <iframe
+          className="notion-image-inset"
+          src={value.properties.source[0][0]}
+        />
+      </div>
+    );
+  }
 
   if (type === "embed" || type === "video") {
     return (

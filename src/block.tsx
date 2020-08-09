@@ -240,6 +240,7 @@ export const Block: React.FC<Block> = props => {
 
     case "image":
     case "embed":
+    case "figma":
     case "video":
       const value = block.value as ContentValueType;
 
