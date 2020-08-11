@@ -58,6 +58,6 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "prismjs": "^1.20.0"
+    "prismjs": "^1.21.0"
   }
 }
