@@ -88,7 +88,7 @@ List of pages that implement this library.
 
 - [PS Tunnel](https://pstunnel.com/blog)
 - [Splitbee](https://splitbee.io/blog)
-- [timo.sh](https://timo.sh)
+- [timo.sh](https://timo.sh) – _[Source](https://github.com/timolins/timo-sh)_
 
 ## Supported Blocks
 
