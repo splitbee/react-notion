@@ -24,7 +24,7 @@ const Asset: React.FC<{
 
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
-  if (type === "figma") {
+  if (type === "embed" || type === "video" || type === "figma") {
     return (
       <div
         style={{
@@ -34,21 +34,8 @@ const Asset: React.FC<{
       >
         <iframe
           className="notion-image-inset"
-          src={value.properties.source[0][0]}
+          src={type === "figma" ? value.properties.source[0][0] : display_source}
         />
-      </div>
-    );
-  }
-
-  if (type === "embed" || type === "video") {
-    return (
-      <div
-        style={{
-          paddingBottom: `${aspectRatio * 100}%`,
-          position: "relative"
-        }}
-      >
-        <iframe className="notion-image-inset" src={display_source} />
       </div>
     );
   }
