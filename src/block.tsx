@@ -247,7 +247,11 @@ export const Block: React.FC<Block> = props => {
       return (
         <figure
           className="notion-asset-wrapper"
-          style={{ width: value.format.block_width }}
+          style={
+            value.format !== undefined
+              ? { width: value.format.block_width }
+              : undefined
+          }
         >
           <Asset block={block} mapImageUrl={mapImageUrl} />
 

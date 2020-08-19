@@ -196,7 +196,7 @@ export interface ContentValueType extends BaseValueType {
     source: string[][];
     caption?: DecorationType[];
   };
-  format: {
+  format?: {
     block_width: number;
     block_height: number;
     display_source: string;

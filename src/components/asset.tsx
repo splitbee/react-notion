@@ -16,11 +16,11 @@ const Asset: React.FC<{
 
   const format = value.format;
   const {
-    display_source,
-    block_aspect_ratio,
-    block_height,
-    block_width
-  } = format;
+    display_source = undefined,
+    block_aspect_ratio = undefined,
+    block_height = 1,
+    block_width = 1
+  } = format ?? {};
 
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
