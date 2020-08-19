@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BlockType, ContentValueType, MapImageUrl } from "../types";
 
-const types = ["video", "image", "embed"];
+const types = ["video", "image", "embed", "figma"];
 
 const Asset: React.FC<{
   block: BlockType;
@@ -24,7 +24,7 @@ const Asset: React.FC<{
 
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
-  if (type === "embed" || type === "video") {
+  if (type === "embed" || type === "video" || type === "figma") {
     return (
       <div
         style={{
@@ -32,7 +32,10 @@ const Asset: React.FC<{
           position: "relative"
         }}
       >
-        <iframe className="notion-image-inset" src={display_source} />
+        <iframe
+          className="notion-image-inset"
+          src={type === "figma" ? value.properties.source[0][0] : display_source}
+        />
       </div>
     );
   }
