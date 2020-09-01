@@ -8,6 +8,8 @@
  *
  */
 
+import { FC } from "react";
+
 /**
  * Base properties that all blocks share.
  */
@@ -256,6 +258,13 @@ interface TableCollectionType extends BaseValueType {
   };
 }
 
+export interface TweetType extends BaseValueType {
+  type: "tweet";
+  properties: {
+    source: [string[]];
+  };
+}
+
 export type CollectionViewType = TableGalleryType | TableCollectionType;
 
 /**
@@ -282,7 +291,10 @@ export type BlockValueType =
   | CalloutValueType
   | BookmarkValueType
   | ToggleValueType
-  | CollectionValueType;
+  | CollectionValueType
+  | TweetType;
+
+export type BlockValueTypeKeys = Pick<BlockValueType, "type">["type"];
 
 export interface BlockType {
   role: string;
@@ -329,3 +341,9 @@ export interface LoadPageChunkData {
 
 export type MapPageUrl = (pageId: string) => string;
 export type MapImageUrl = (image: string) => string;
+
+export interface CustomComponentProps {
+  blockValue: BlockValueType;
+}
+
+export type CustomComponent = FC<CustomComponentProps>;

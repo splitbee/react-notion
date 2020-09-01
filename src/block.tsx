@@ -5,7 +5,9 @@ import {
   ContentValueType,
   BlockMapType,
   MapPageUrl,
-  MapImageUrl
+  MapImageUrl,
+  BlockValueTypeKeys,
+  CustomComponent
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
@@ -62,6 +64,7 @@ interface Block {
 
   fullPage?: boolean;
   hideHeader?: boolean;
+  customComponents?: Record<BlockValueTypeKeys, CustomComponent>;
 }
 
 export const Block: React.FC<Block> = props => {
@@ -73,9 +76,16 @@ export const Block: React.FC<Block> = props => {
     hideHeader,
     blockMap,
     mapPageUrl,
-    mapImageUrl
+    mapImageUrl,
+    customComponents
   } = props;
   const blockValue = block?.value;
+
+  // render a custom component first if passed.
+  if (customComponents && customComponents[blockValue?.type]) {
+    const CustomComponent = customComponents[blockValue?.type] as any;
+    return <CustomComponent blockValue={blockValue} />;
+  }
 
   switch (blockValue?.type) {
     case "page":
