@@ -40,9 +40,8 @@ const Asset: React.FC<{
     );
   }
 
-  const src = mapImageUrl(value.properties.source[0][0]);
-
-  if (type === "image") {
+  if (block.value.type === "image") {
+    const src = mapImageUrl(value.properties.source[0][0], block);
     const caption = value.properties.caption?.[0][0];
 
     if (block_aspect_ratio) {
