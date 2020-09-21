@@ -1,5 +1,6 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
 import Head from "next/head";
+import Link from "next/link";
 import fetch from "node-fetch";
 
 export async function getStaticProps() {
@@ -26,7 +27,14 @@ const Home = ({ blockMap }) => (
     <Head>
       <title>react-notion example</title>
     </Head>
-    <NotionRenderer blockMap={blockMap} />
+    <NotionRenderer
+      blockMap={blockMap}
+      customComponents={{
+        page: ({ blockValue, renderComponent }) => (
+          <Link href={`/${blockValue.id}`}>{renderComponent()}</Link>
+        )
+      }}
+    />
   </div>
 );
 
