@@ -51,6 +51,7 @@ const PageIcon: React.FC<AssetProps> = ({
       <span
         className={classNames(
           className,
+          "notion-emoji",
           big ? "notion-page-icon-cover" : "notion-page-icon"
         )}
         role="img"
