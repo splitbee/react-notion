@@ -294,7 +294,7 @@ export type BlockValueType =
   | CollectionValueType
   | TweetType;
 
-export type BlockValueTypeKeys = Pick<BlockValueType, "type">["type"];
+export type BlockValueTypeKeys = BlockValueType["type"];
 
 export interface BlockType {
   role: string;
@@ -342,8 +342,17 @@ export interface LoadPageChunkData {
 export type MapPageUrl = (pageId: string) => string;
 export type MapImageUrl = (image: string) => string;
 
-export interface CustomComponentProps {
-  blockValue: BlockValueType;
+export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
+
+export interface CustomComponentProps<T extends BlockValueTypeKeys> {
+  blockValue: T extends BlockValueType
+    ? Extract<BlockValueType, { type: T }>
+    : BaseValueType;
 }
 
-export type CustomComponent = FC<CustomComponentProps>;
+export type CustomComponent<T extends BlockValueTypeKeys> = FC<
+  CustomComponentProps<T>
+>;
+export type CustomComponents = {
+  [K in BlockValueTypeKeys]?: CustomComponent<K>;
+};
