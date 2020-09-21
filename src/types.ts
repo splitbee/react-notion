@@ -340,7 +340,7 @@ export interface LoadPageChunkData {
 }
 
 export type MapPageUrl = (pageId: string) => string;
-export type MapImageUrl = (image: string) => string;
+export type MapImageUrl = (image: string, block?: BlockType) => string;
 
 export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
 

@@ -1,4 +1,4 @@
-import { DecorationType, BlockMapType } from "./types";
+import { DecorationType, BlockMapType, MapImageUrl } from "./types";
 
 export const classNames = (...classes: Array<string | undefined | false>) =>
   classes.filter(a => !!a).join(" ");
@@ -43,10 +43,22 @@ export const getListNumber = (blockId: string, blockMap: BlockMapType) => {
   return group.indexOf(blockId) + 1;
 };
 
-export const defaultMapImageUrl = (image: string = "") => {
-  return `https://www.notion.so${
-    image.startsWith("/image") ? image : `/image/${encodeURIComponent(image)}`
-  }`;
+export const defaultMapImageUrl: MapImageUrl = (image = "", block) => {
+  const url = new URL(
+    `https://www.notion.so${
+      image.startsWith("/image") ? image : `/image/${encodeURIComponent(image)}`
+    }`
+  );
+
+  if (block) {
+    const table =
+      block.value.parent_table === "space" ? "block" : block.value.parent_table;
+    url.searchParams.set("table", table);
+    url.searchParams.set("id", block.value.id);
+    url.searchParams.set("cache", "v2");
+  }
+
+  return url.toString();
 };
 
 export const defaultMapPageUrl = (pageId: string = "") => {
