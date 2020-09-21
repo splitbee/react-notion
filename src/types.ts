@@ -345,6 +345,7 @@ export type MapImageUrl = (image: string, block?: BlockType) => string;
 export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
 
 export interface CustomComponentProps<T extends BlockValueTypeKeys> {
+  renderComponent: () => JSX.Element | null;
   blockValue: T extends BlockValueType
     ? Extract<BlockValueType, { type: T }>
     : BaseValueType;
