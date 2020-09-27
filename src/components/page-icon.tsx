@@ -34,7 +34,7 @@ const PageIcon: React.FC<AssetProps> = ({
   const title = block.value.properties?.title;
 
   if (icon?.includes("http")) {
-    const url = mapImageUrl(icon);
+    const url = mapImageUrl(icon, block);
 
     return (
       <img
