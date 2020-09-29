@@ -50,7 +50,7 @@ export const defaultMapImageUrl: MapImageUrl = (image = "", block) => {
     }`
   );
 
-  if (block) {
+  if (block && !image.includes("/images/page-cover/")) {
     const table =
       block.value.parent_table === "space" ? "block" : block.value.parent_table;
     url.searchParams.set("table", table);
