@@ -16,19 +16,15 @@ export async function getStaticProps() {
 }
 
 const Home = ({ blockMap }) => (
-  <div
-    style={{
-      maxWidth: 708,
-      margin: "0 auto",
-      padding: "0 8px",
-      fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"`
-    }}
-  >
+  <div>
     <Head>
+      <style>{`body { margin: 0;}`}</style>
       <title>react-notion example</title>
     </Head>
     <NotionRenderer
       blockMap={blockMap}
+      fullPage
+      hideHeader
       customBlockComponents={{
         page: ({ blockValue, renderComponent }) => (
           <Link href={`/${blockValue.id}`}>{renderComponent()}</Link>
