@@ -143,7 +143,7 @@ export const Block: React.FC<Block> = props => {
                 )}
                 {page_cover && (
                   <img
-                    src={mapImageUrl(page_cover)}
+                    src={mapImageUrl(page_cover, block)}
                     alt={getTextContent(blockValue.properties.title)}
                     className="notion-page-cover"
                     style={{
