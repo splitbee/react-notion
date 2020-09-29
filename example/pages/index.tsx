@@ -11,7 +11,8 @@ export async function getStaticProps() {
   return {
     props: {
       blockMap: data
-    }
+    },
+    revalidate: 1
   };
 }
 
