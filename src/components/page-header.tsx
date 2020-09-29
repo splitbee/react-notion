@@ -58,37 +58,35 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 
   return (
     <header className="notion-page-header">
-      <div className="notion-nav-header">
-        <div className="notion-nav-breadcrumbs">
-          {breadcrumbs.map((breadcrumb, index) => (
-            <React.Fragment key={breadcrumb.pageId}>
-              <a
-                className={`notion-nav-breadcrumb ${
-                  breadcrumb.active ? "notion-nav-breadcrumb-active" : ""
-                }`}
-                href={
-                  breadcrumb.active ? undefined : mapPageUrl(breadcrumb.pageId)
-                }
-              >
-                {breadcrumb.icon && (
-                  <PageIcon
-                    className="notion-nav-icon"
-                    block={breadcrumb.block}
-                    mapImageUrl={mapImageUrl}
-                  />
-                )}
-
-                {breadcrumb.title && (
-                  <span className="notion-nav-title">{breadcrumb.title}</span>
-                )}
-              </a>
-
-              {index < breadcrumbs.length - 1 && (
-                <span className="notion-nav-spacer">/</span>
+      <div className="notion-nav-breadcrumbs">
+        {breadcrumbs.map((breadcrumb, index) => (
+          <React.Fragment key={breadcrumb.pageId}>
+            <a
+              className={`notion-nav-breadcrumb ${
+                breadcrumb.active ? "notion-nav-breadcrumb-active" : ""
+              }`}
+              href={
+                breadcrumb.active ? undefined : mapPageUrl(breadcrumb.pageId)
+              }
+            >
+              {breadcrumb.icon && (
+                <PageIcon
+                  className="notion-nav-icon"
+                  block={breadcrumb.block}
+                  mapImageUrl={mapImageUrl}
+                />
               )}
-            </React.Fragment>
-          ))}
-        </div>
+
+              {breadcrumb.title && (
+                <span className="notion-nav-title">{breadcrumb.title}</span>
+              )}
+            </a>
+
+            {index < breadcrumbs.length - 1 && (
+              <span className="notion-nav-spacer">/</span>
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </header>
   );

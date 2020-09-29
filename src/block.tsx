@@ -133,56 +133,49 @@ export const Block: React.FC<Block> = props => {
             const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
 
             return (
-              <div className="notion notion-app">
-                <div className="notion-cursor-listener">
-                  <div className="notion-frame">
-                    {!hideHeader && (
-                      <PageHeader
-                        blockMap={blockMap}
-                        mapPageUrl={mapPageUrl}
-                        mapImageUrl={mapImageUrl}
-                      />
-                    )}
+              <div className="notion">
+                {!hideHeader && (
+                  <PageHeader
+                    blockMap={blockMap}
+                    mapPageUrl={mapPageUrl}
+                    mapImageUrl={mapImageUrl}
+                  />
+                )}
+                {page_cover && (
+                  <img
+                    src={mapImageUrl(page_cover)}
+                    alt={getTextContent(blockValue.properties.title)}
+                    className="notion-page-cover"
+                    style={{
+                      objectPosition: `center ${coverPosition}%`
+                    }}
+                  />
+                )}
+                <main
+                  className={classNames(
+                    "notion-page",
+                    !page_cover && "notion-page-offset",
+                    page_full_width && "notion-full-width",
+                    page_small_text && "notion-small-text"
+                  )}
+                >
+                  {page_icon && (
+                    <PageIcon
+                      className={
+                        page_cover ? "notion-page-icon-offset" : undefined
+                      }
+                      block={block}
+                      big
+                      mapImageUrl={mapImageUrl}
+                    />
+                  )}
 
-                    <div className="notion-scroller">
-                      {page_cover && (
-                        <img
-                          src={mapImageUrl(page_cover)}
-                          alt={getTextContent(blockValue.properties.title)}
-                          className="notion-page-cover"
-                          style={{
-                            objectPosition: `center ${coverPosition}%`
-                          }}
-                        />
-                      )}
-                      <main
-                        className={classNames(
-                          "notion-page",
-                          !page_cover && "notion-page-offset",
-                          page_full_width && "notion-full-width",
-                          page_small_text && "notion-small-text"
-                        )}
-                      >
-                        {page_icon && (
-                          <PageIcon
-                            className={
-                              page_cover ? "notion-page-icon-offset" : undefined
-                            }
-                            block={block}
-                            big
-                            mapImageUrl={mapImageUrl}
-                          />
-                        )}
-
-                        <div className="notion-title">
-                          {renderChildText(blockValue.properties.title)}
-                        </div>
-
-                        {children}
-                      </main>
-                    </div>
+                  <div className="notion-title">
+                    {renderChildText(blockValue.properties.title)}
                   </div>
-                </div>
+
+                  {children}
+                </main>
               </div>
             );
           } else {

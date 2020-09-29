@@ -7,61 +7,14 @@
     "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.notion > * {
+.notion > *,
+.notion-page > * {
   padding: 3px 0px;
 }
 
 .notion * {
   margin-block-start: 0px;
   margin-block-end: 0px;
-}
-
-.notion-app {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-  background: #fff;
-}
-
-.notion-cursor-listener {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  flex: 1 1 0%;
-  background: #fff;
-}
-
-.medium-zoom-overlay {
-  z-index: 100;
-}
-
-.medium-zoom-image {
-  border-radius: 0;
-  z-index: 101;
-}
-
-.notion-frame {
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-}
-
-.notion-scroller {
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-  flex-grow: 1;
-  position: relative;
-  align-items: center;
-  overflow: auto;
-  margin-right: 0;
-  margin-bottom: 0;
 }
 
 .notion-red {
@@ -254,6 +207,7 @@ img.notion-page-icon-offset {
   margin: 6px 0px;
   padding: 0;
   border-top-width: 1px;
+  border-bottom-width: 0;
   border-color: rgba(55, 53, 47, 0.09);
 }
 .notion-link {
@@ -637,23 +591,16 @@ img.notion-page-icon {
 }
 
 .notion-page-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   max-width: 100vw;
   height: 45px;
   min-height: 45px;
-  z-index: 9;
-}
-
-.notion-nav-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
   display: flex;
   background: #fff;
   flex-direction: row;
+  box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
