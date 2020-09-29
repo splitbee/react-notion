@@ -1,5 +1,7 @@
+import React from "react";
 import { NotionRenderer, BlockMapType } from "react-notion";
 import Head from "next/head";
+import Link from "next/link";
 import fetch from "node-fetch";
 
 export async function getServerSideProps(context) {
@@ -39,7 +41,15 @@ const NotionPage = ({ blockMap }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <NotionRenderer blockMap={blockMap} fullPage />
+      <NotionRenderer
+        blockMap={blockMap}
+        fullPage
+        customBlockComponents={{
+          page: ({ blockValue, renderComponent }) => (
+            <Link href={`/${blockValue.id}`}>{renderComponent()}</Link>
+          )
+        }}
+      />
       <style jsx global>{`
         div :global(.notion-code) {
           box-sizing: border-box;

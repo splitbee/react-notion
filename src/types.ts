@@ -8,6 +8,8 @@
  *
  */
 
+import { FC } from "react";
+
 /**
  * Base properties that all blocks share.
  */
@@ -256,6 +258,13 @@ interface TableCollectionType extends BaseValueType {
   };
 }
 
+export interface TweetType extends BaseValueType {
+  type: "tweet";
+  properties: {
+    source: [string[]];
+  };
+}
+
 export type CollectionViewType = TableGalleryType | TableCollectionType;
 
 /**
@@ -282,7 +291,10 @@ export type BlockValueType =
   | CalloutValueType
   | BookmarkValueType
   | ToggleValueType
-  | CollectionValueType;
+  | CollectionValueType
+  | TweetType;
+
+export type BlockValueTypeKeys = BlockValueType["type"];
 
 export interface BlockType {
   role: string;
@@ -329,3 +341,34 @@ export interface LoadPageChunkData {
 
 export type MapPageUrl = (pageId: string) => string;
 export type MapImageUrl = (image: string, block?: BlockType) => string;
+
+export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
+
+export interface CustomBlockComponentProps<T extends BlockValueTypeKeys> {
+  renderComponent: () => JSX.Element | null;
+  blockValue: T extends BlockValueType ? BlockValueProp<T> : BaseValueType;
+}
+
+export type CustomBlockComponents = {
+  [K in BlockValueTypeKeys]?: FC<CustomBlockComponentProps<K>>;
+};
+
+type SubDecorationSymbol = SubDecorationType[0];
+type SubDecorationValue<T extends SubDecorationSymbol> = Extract<
+  SubDecorationType,
+  [T, any]
+>[1];
+
+export type CustomDecoratorComponentProps<
+  T extends SubDecorationSymbol
+> = (SubDecorationValue<T> extends never
+  ? {}
+  : {
+      decoratorValue: SubDecorationValue<T>;
+    }) & {
+  renderComponent: () => JSX.Element | null;
+};
+
+export type CustomDecoratorComponents = {
+  [K in SubDecorationSymbol]?: FC<CustomDecoratorComponentProps<K>>;
+};
