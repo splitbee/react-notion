@@ -3,7 +3,8 @@ import {
   BlockMapType,
   MapPageUrl,
   MapImageUrl,
-  CustomComponents
+  CustomBlockComponents,
+  CustomDecoratorComponents
 } from "./types";
 import { Block } from "./block";
 import { defaultMapImageUrl, defaultMapPageUrl } from "./utils";
@@ -17,7 +18,8 @@ export interface NotionRendererProps {
 
   currentId?: string;
   level?: number;
-  customComponents?: CustomComponents;
+  customBlockComponents?: CustomBlockComponents;
+  customDecoratorComponents?: CustomDecoratorComponents;
 }
 
 export const NotionRenderer: React.FC<NotionRendererProps> = ({

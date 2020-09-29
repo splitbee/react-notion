@@ -344,16 +344,31 @@ export type MapImageUrl = (image: string, block?: BlockType) => string;
 
 export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
 
-export interface CustomComponentProps<T extends BlockValueTypeKeys> {
+export interface CustomBlockComponentProps<T extends BlockValueTypeKeys> {
   renderComponent: () => JSX.Element | null;
-  blockValue: T extends BlockValueType
-    ? Extract<BlockValueType, { type: T }>
-    : BaseValueType;
+  blockValue: T extends BlockValueType ? BlockValueProp<T> : BaseValueType;
 }
 
-export type CustomComponent<T extends BlockValueTypeKeys> = FC<
-  CustomComponentProps<T>
->;
-export type CustomComponents = {
-  [K in BlockValueTypeKeys]?: CustomComponent<K>;
+export type CustomBlockComponents = {
+  [K in BlockValueTypeKeys]?: FC<CustomBlockComponentProps<K>>;
+};
+
+type SubDecorationSymbol = SubDecorationType[0];
+type SubDecorationValue<T extends SubDecorationSymbol> = Extract<
+  SubDecorationType,
+  [T, any]
+>[1];
+
+export type CustomDecoratorComponentProps<
+  T extends SubDecorationSymbol
+> = (SubDecorationValue<T> extends never
+  ? {}
+  : {
+      decoratorValue: SubDecorationValue<T>;
+    }) & {
+  renderComponent: () => JSX.Element | null;
+};
+
+export type CustomDecoratorComponents = {
+  [K in SubDecorationSymbol]?: FC<CustomDecoratorComponentProps<K>>;
 };

@@ -6,8 +6,10 @@ import {
   BlockMapType,
   MapPageUrl,
   MapImageUrl,
-  CustomComponents,
-  BlockValueProp
+  CustomBlockComponents,
+  BlockValueProp,
+  CustomDecoratorComponents,
+  CustomDecoratorComponentProps
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
@@ -15,42 +17,68 @@ import PageIcon from "./components/page-icon";
 import PageHeader from "./components/page-header";
 import { classNames, getTextContent, getListNumber } from "./utils";
 
-export const renderChildText = (properties: DecorationType[]) => {
+export const createRenderChildText = (
+  customDecoratorComponents?: CustomDecoratorComponents
+) => (properties: DecorationType[]) => {
   return properties?.map(([text, decorations], i) => {
     if (!decorations) {
       return <React.Fragment key={i}>{text}</React.Fragment>;
     }
 
     return decorations.reduceRight((element, decorator) => {
-      switch (decorator[0]) {
-        case "h":
-          return (
-            <span key={i} className={`notion-${decorator[1]}`}>
-              {element}
-            </span>
-          );
-        case "c":
-          return (
-            <code key={i} className="notion-inline-code">
-              {element}
-            </code>
-          );
-        case "b":
-          return <b key={i}>{element}</b>;
-        case "i":
-          return <em key={i}>{element}</em>;
-        case "s":
-          return <s key={i}>{element}</s>;
-        case "a":
-          return (
-            <a className="notion-link" href={decorator[1]} key={i}>
-              {element}
-            </a>
-          );
+      const renderText = () => {
+        switch (decorator[0]) {
+          case "h":
+            return (
+              <span key={i} className={`notion-${decorator[1]}`}>
+                {element}
+              </span>
+            );
+          case "c":
+            return (
+              <code key={i} className="notion-inline-code">
+                {element}
+              </code>
+            );
+          case "b":
+            return <b key={i}>{element}</b>;
+          case "i":
+            return <em key={i}>{element}</em>;
+          case "s":
+            return <s key={i}>{element}</s>;
+          case "a":
+            return (
+              <a className="notion-link" href={decorator[1]} key={i}>
+                {element}
+              </a>
+            );
 
-        default:
-          return <React.Fragment key={i}>{element}</React.Fragment>;
+          default:
+            return <React.Fragment key={i}>{element}</React.Fragment>;
+        }
+      };
+
+      const CustomComponent = customDecoratorComponents?.[decorator[0]];
+
+      if (CustomComponent) {
+        const props = (decorator[1]
+          ? {
+              decoratorValue: decorator[1]
+            }
+          : {}) as CustomDecoratorComponentProps<typeof decorator[0]>;
+
+        return (
+          <CustomComponent
+            key={i}
+            {...(props as any)}
+            renderComponent={renderText}
+          >
+            {text}
+          </CustomComponent>
+        );
       }
+
+      return renderText();
     }, <>{text}</>);
   });
 };
@@ -64,7 +92,8 @@ interface Block {
 
   fullPage?: boolean;
   hideHeader?: boolean;
-  customComponents?: CustomComponents;
+  customBlockComponents?: CustomBlockComponents;
+  customDecoratorComponents?: CustomDecoratorComponents;
 }
 
 export const Block: React.FC<Block> = props => {
@@ -77,11 +106,14 @@ export const Block: React.FC<Block> = props => {
     blockMap,
     mapPageUrl,
     mapImageUrl,
-    customComponents
+    customBlockComponents,
+    customDecoratorComponents
   } = props;
   const blockValue = block?.value;
 
   const renderComponent = () => {
+    const renderChildText = createRenderChildText(customDecoratorComponents);
+
     switch (blockValue?.type) {
       case "page":
         if (level === 0) {
@@ -468,8 +500,13 @@ export const Block: React.FC<Block> = props => {
   };
 
   // render a custom component first if passed.
-  if (customComponents && customComponents[blockValue?.type] && level !== 0) {
-    const CustomComponent = customComponents[blockValue?.type]!;
+  if (
+    customBlockComponents &&
+    customBlockComponents[blockValue?.type] &&
+    // Do not use custom component for base page block
+    level !== 0
+  ) {
+    const CustomComponent = customBlockComponents[blockValue?.type]!;
     return (
       <CustomComponent
         renderComponent={renderComponent}

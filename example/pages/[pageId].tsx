@@ -44,7 +44,7 @@ const NotionPage = ({ blockMap }) => {
       <NotionRenderer
         blockMap={blockMap}
         fullPage
-        customComponents={{
+        customBlockComponents={{
           page: ({ blockValue, renderComponent }) => (
             <Link href={`/${blockValue.id}`}>{renderComponent()}</Link>
           )

@@ -29,7 +29,7 @@ const Home = ({ blockMap }) => (
     </Head>
     <NotionRenderer
       blockMap={blockMap}
-      customComponents={{
+      customBlockComponents={{
         page: ({ blockValue, renderComponent }) => (
           <Link href={`/${blockValue.id}`}>{renderComponent()}</Link>
         )
