@@ -313,6 +313,10 @@ img.notion-page-icon {
   max-width: 100%;
 }
 
+.notion-asset-wrapper > img {
+  max-width: 100%;
+}
+
 .notion-asset-wrapper iframe {
   border: none;
 }
