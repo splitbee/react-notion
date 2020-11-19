@@ -22,7 +22,15 @@ export const createRenderChildText = (
 ) => (properties: DecorationType[], blocks: BlockMapType) => {
   return properties?.map(([text, decorations], i) => {
     if (!decorations) {
-      return <React.Fragment key={i}>{text}</React.Fragment>;
+      return (
+        <React.Fragment key={i}>
+          {text.split(/(\n)/).map((t, index) => (
+            <React.Fragment key={index}>
+              {t !== "\n" ? t : <br />}
+            </React.Fragment>
+          ))}
+        </React.Fragment>
+      );
     }
 
     if (text === "‣" && decorations[0][0] === "p") {
