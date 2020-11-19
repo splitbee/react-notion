@@ -34,7 +34,7 @@ export const createRenderChildText = (
     }
 
     if (text === "‣" && decorations[0][0] === "p") {
-      text = blocks[decorations[0][1]].value.properties.title;
+      text = blocks[decorations[0][1]]?.value?.properties?.title ?? "";
     }
 
     return decorations.reduceRight((element, decorator) => {
