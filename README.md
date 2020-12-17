@@ -7,7 +7,7 @@ Use Notion as CMS for your blog, documentation or personal site.
 
 **`react-notion` was developed by <a href="http://splitbee.io/">Splitbee</a>. Splitbee is a fast, reliable, free, and modern analytics for any team.**
 
-_This packages doesn't handle the communication with the API. Check out [notion-api-worker](https://github.com/splitbee/notion-api-worker) for an easy solution_.
+_This package doesn't handle the communication with the API. Check out [notion-api-worker](https://github.com/splitbee/notion-api-worker) for an easy solution_.
 
 <sub>Created by <a href="https://twitter.com/timolins">Timo Lins</a> & <a href="https://twitter.com/linstobias">Tobias Lins</a> with the help of all <a href="https://github.com/splitbee/react-notion/graphs/contributors">contributors</a> ❤️</sub>
 
