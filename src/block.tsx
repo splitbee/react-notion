@@ -427,7 +427,13 @@ export const Block: React.FC<Block> = props => {
             <div>
               <PageIcon block={block} mapImageUrl={mapImageUrl} />
             </div>
-            <div className="notion-callout-text">
+            <div
+              className={classNames(
+                "notion-callout-text",
+                blockValue.format.block_color &&
+                  `notion-${blockValue.format.block_color}`
+              )}
+            >
               {renderChildText(blockValue.properties.title)}
             </div>
           </div>
