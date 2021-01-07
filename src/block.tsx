@@ -421,6 +421,8 @@ export const Block: React.FC<Block> = props => {
             className={classNames(
               "notion-callout",
               blockValue.format.block_color &&
+                `notion-${blockValue.format.block_color}`,
+              blockValue.format.block_color &&
                 `notion-${blockValue.format.block_color}_co`
             )}
           >
