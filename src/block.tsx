@@ -505,6 +505,7 @@ export const Block: React.FC<Block> = props => {
     return (
       <CustomComponent
         renderComponent={renderComponent}
+        block={block}
         blockValue={blockValue as BlockValueProp<typeof blockValue.type>}
         level={level}
       >
