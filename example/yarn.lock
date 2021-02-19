@@ -3760,9 +3760,9 @@ postcss@7.0.32, postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.
     supports-color "^6.1.0"
 
 prismjs@^1.21.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.21.0.tgz#36c086ec36b45319ec4218ee164c110f9fc015a3"
-  integrity sha512-uGdSIu1nk3kej2iZsLyDoJ7e9bnPzIgY0naW/HdknGj61zScaprVEVGHrPoXqI+M9sP0NDnTK2jpkvmldpuqDw==
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz#d3b3967f7d72440690497652a9d40ff046067f33"
+  integrity sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA==
   optionalDependencies:
     clipboard "^2.0.0"
 
@@ -3887,10 +3887,10 @@ react-is@16.13.1, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-notion@^0.8.0:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/react-notion/-/react-notion-0.8.1.tgz#2a6df3a1a9ecf2d4719a79d2a4fc0a055de3a9f1"
-  integrity sha512-i6eozvgqtJCfoGSty5FuclE7wPIw3JdXiPgzoXU7+9a+I8SvnMS016NLRbUaQva6EeM+tsziQT2OVj+rMgv26w==
+react-notion@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/react-notion/-/react-notion-0.9.3.tgz#f7314e5bd8c0f80c1f82aec212e4ac47b14a207a"
+  integrity sha512-Y9CqGbG8ix9I96XfzSYVadRxiwZ/ZofL1se4R6QNGI+wKSrDV35fQ35FT/q1P0t12bQGXtHSUFxk+GGYBjTWQQ==
   dependencies:
     prismjs "^1.21.0"
 
