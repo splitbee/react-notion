@@ -284,7 +284,7 @@ img.notion-page-icon {
 
 .notion-list-disc {
   list-style-type: disc;
-  padding-inline-start: 1.7em;
+  padding-inline-start: 1.6em;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -304,8 +304,13 @@ img.notion-page-icon {
 }
 
 .notion-list li {
-  padding: 6px 0px;
+  padding: 4px 0px;
   white-space: pre-wrap;
+}
+
+.notion-list > .notion-text {
+  margin-left: -1.6em;
+  padding-left: 0px;
 }
 
 .notion-asset-wrapper {
