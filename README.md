@@ -88,8 +88,8 @@ export default ({ blockMap }) => (
 
 List of pages that implement this library.
 
+- [Splitbee Blog](https://splitbee.io/blog)
 - [PS Tunnel](https://pstunnel.com/blog)
-- [Splitbee](https://splitbee.io/blog)
 - [timo.sh](https://timo.sh) – _[Source](https://github.com/timolins/timo-sh)_
 
 ## Supported Blocks
