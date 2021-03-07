@@ -20,6 +20,8 @@ export interface NotionRendererProps {
   level?: number;
   customBlockComponents?: CustomBlockComponents;
   customDecoratorComponents?: CustomDecoratorComponents;
+
+  strict?: boolean;
 }
 
 export const NotionRenderer: React.FC<NotionRendererProps> = ({
@@ -27,6 +29,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
   currentId,
   mapPageUrl = defaultMapPageUrl,
   mapImageUrl = defaultMapImageUrl,
+  strict = false,
   ...props
 }) => {
   const { blockMap } = props;
@@ -34,8 +37,12 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
   const currentBlock = blockMap[id];
 
   if (!currentBlock) {
+    const errorMessage = `error rendering block ${currentId}: block not in blockMap`;
+    if (strict) {
+      throw new Error(errorMessage);
+    }
     if (process.env.NODE_ENV !== "production") {
-      console.warn("error rendering block", currentId);
+      console.warn(errorMessage);
     }
     return null;
   }
@@ -56,6 +63,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
           level={level + 1}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImageUrl}
+          strict={strict}
           {...props}
         />
       ))}

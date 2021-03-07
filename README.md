@@ -84,6 +84,14 @@ export default ({ blockMap }) => (
 );
 ```
 
+### Strict Mode
+
+`NotionRenderer` will do its best to render your page, but in some cases it may not be able to render all content. By default, if content cannot be displayed, it will be omitted from the final render but as much content as possible will still be displayed. `strict` mode throws an error in cases like this, causing the entire render to fail if any page content cannot be displayed.
+
+```js
+<NotionRenderer blockMap={blockMap} strict={true} />
+```
+
 ## Sites using react-notion
 
 List of pages that implement this library.
