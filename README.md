@@ -11,6 +11,8 @@ _This package doesn't handle the communication with the API. Check out [notion-a
 
 <sub>Created by <a href="https://twitter.com/timolins">Timo Lins</a> & <a href="https://twitter.com/linstobias">Tobias Lins</a> with the help of all <a href="https://github.com/splitbee/react-notion/graphs/contributors">contributors</a> ❤️</sub>
 
+
+
 ## Features
 
 ⚡️ **Fast** – Up to 10x faster than Notion\*
@@ -22,6 +24,10 @@ _This package doesn't handle the communication with the API. Check out [notion-a
 🎨 **Custom Styles** – Styles are easily adaptable. Optional styles included
 
 _\* First Meaningful Paint compared to a [hosted example](http://react-notion-example.now.sh/) on [Vercel](https://vercel.com)._
+
+
+**react-notion** is best suited as minimal renderer for blogs & content pages. If you're looking for a full-featured solution to render Notion-like pages, check out [react-notion-x](https://github.com/NotionX/react-notion-x).
+
 
 ## Install
 
@@ -96,29 +102,29 @@ List of pages that implement this library.
 
 Most common block types are supported. We happily accept pull requests to add support for the missing blocks.
 
-| Block Type        | Supported  | Notes                  |
-| ----------------- | ---------- | ---------------------- |
-| Text              | ✅ Yes     |                        |
-| Heading           | ✅ Yes     |                        |
-| Image             | ✅ Yes     |                        |
-| Image Caption     | ✅ Yes     |                        |
-| Bulleted List     | ✅ Yes     |                        |
-| Numbered List     | ✅ Yes     |                        |
-| Quote             | ✅ Yes     |                        |
-| Callout           | ✅ Yes     |                        |
-| Column            | ✅ Yes     |                        |
-| iframe            | ✅ Yes     |                        |
-| Video             | ✅ Yes     | Only embedded videos   |
-| Divider           | ✅ Yes     |                        |
-| Link              | ✅ Yes     |                        |
-| Code              | ✅ Yes     |                        |
-| Web Bookmark      | ✅ Yes     |                        |
-| Toggle List       | ✅ Yes     |                        |
-| Page Links        | ✅ Yes     |                        |
-| Header            | ✅ Yes     | Enable with `fullPage` |
-| Databases         | ❌ Missing |                        |
-| Checkbox          | ❌ Missing |                        |
-| Table Of Contents | ❌ Missing |                        |
+| Block Type        | Supported  | Notes                                                                                 |
+| ----------------- | ---------- | ------------------------------------------------------------------------------------- |
+| Text              | ✅ Yes     |                                                                                       |
+| Heading           | ✅ Yes     |                                                                                       |
+| Image             | ✅ Yes     |                                                                                       |
+| Image Caption     | ✅ Yes     |                                                                                       |
+| Bulleted List     | ✅ Yes     |                                                                                       |
+| Numbered List     | ✅ Yes     |                                                                                       |
+| Quote             | ✅ Yes     |                                                                                       |
+| Callout           | ✅ Yes     |                                                                                       |
+| Column            | ✅ Yes     |                                                                                       |
+| iframe            | ✅ Yes     |                                                                                       |
+| Video             | ✅ Yes     | Only embedded videos                                                                  |
+| Divider           | ✅ Yes     |                                                                                       |
+| Link              | ✅ Yes     |                                                                                       |
+| Code              | ✅ Yes     |                                                                                       |
+| Web Bookmark      | ✅ Yes     |                                                                                       |
+| Toggle List       | ✅ Yes     |                                                                                       |
+| Page Links        | ✅ Yes     |                                                                                       |
+| Header            | ✅ Yes     | Enable with `fullPage`                                                                |
+| Databases         | ❌ Missing | Not planned. Supported by [react-notion-x](https://github.com/NotionX/react-notion-x) |
+| Checkbox          | ❌ Missing | Supported by [react-notion-x](https://github.com/NotionX/react-notion-x)              |
+| Table Of Contents | ❌ Missing | Supported by [react-notion-x](https://github.com/NotionX/react-notion-x)              |
 
 ## Block Type Specific Caveats
 
