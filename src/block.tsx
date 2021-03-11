@@ -19,10 +19,22 @@ import { classNames, getTextContent, getListNumber } from "./utils";
 
 export const createRenderChildText = (
   customDecoratorComponents?: CustomDecoratorComponents
-) => (properties: DecorationType[]) => {
+) => (properties: DecorationType[], blocks: BlockMapType) => {
   return properties?.map(([text, decorations], i) => {
     if (!decorations) {
-      return <React.Fragment key={i}>{text}</React.Fragment>;
+      return (
+        <React.Fragment key={i}>
+          {text.split(/(\n)/).map((t, index) => (
+            <React.Fragment key={index}>
+              {t !== "\n" ? t : <br />}
+            </React.Fragment>
+          ))}
+        </React.Fragment>
+      );
+    }
+
+    if (text === "‣" && decorations[0][0] === "p") {
+      text = blocks[decorations[0][1]]?.value?.properties?.title ?? "";
     }
 
     return decorations.reduceRight((element, decorator) => {
@@ -47,6 +59,12 @@ export const createRenderChildText = (
           case "s":
             return <s key={i}>{element}</s>;
           case "a":
+            return (
+              <a className="notion-link" href={decorator[1]} key={i}>
+                {element}
+              </a>
+            );
+          case "p":
             return (
               <a className="notion-link" href={decorator[1]} key={i}>
                 {element}
@@ -171,7 +189,7 @@ export const Block: React.FC<Block> = props => {
                   )}
 
                   <div className="notion-title">
-                    {renderChildText(blockValue.properties.title)}
+                    {renderChildText(blockValue.properties.title, blockMap)}
                   </div>
 
                   {children}
@@ -191,7 +209,7 @@ export const Block: React.FC<Block> = props => {
                 </div>
               )}
               <div className="notion-page-text">
-                {renderChildText(blockValue.properties.title)}
+                {renderChildText(blockValue.properties.title, blockMap)}
               </div>
             </a>
           );
@@ -200,21 +218,21 @@ export const Block: React.FC<Block> = props => {
         if (!blockValue.properties) return null;
         return (
           <h1 className="notion-h1">
-            {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title, blockMap)}
           </h1>
         );
       case "sub_header":
         if (!blockValue.properties) return null;
         return (
           <h2 className="notion-h2">
-            {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title, blockMap)}
           </h2>
         );
       case "sub_sub_header":
         if (!blockValue.properties) return null;
         return (
           <h3 className="notion-h3">
-            {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title, blockMap)}
           </h3>
         );
       case "divider":
@@ -231,7 +249,7 @@ export const Block: React.FC<Block> = props => {
               blockColor && `notion-${blockColor}`
             )}
           >
-            {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title, blockMap)}
           </p>
         );
       case "bulleted_list":
@@ -251,14 +269,16 @@ export const Block: React.FC<Block> = props => {
           output = (
             <>
               {blockValue.properties && (
-                <li>{renderChildText(blockValue.properties.title)}</li>
+                <li>
+                  {renderChildText(blockValue.properties.title, blockMap)}
+                </li>
               )}
               {wrapList(children)}
             </>
           );
         } else {
           output = blockValue.properties ? (
-            <li>{renderChildText(blockValue.properties.title)}</li>
+            <li>{renderChildText(blockValue.properties.title, blockMap)}</li>
           ) : null;
         }
 
@@ -287,13 +307,13 @@ export const Block: React.FC<Block> = props => {
 
             {value.properties.caption && (
               <figcaption className="notion-image-caption">
-                {renderChildText(value.properties.caption)}
+                {renderChildText(value.properties.caption, blockMap)}
               </figcaption>
             )}
           </figure>
         );
       case "code": {
-        if (blockValue.properties.title) {
+        if ((blockValue.properties.title, blockMap)) {
           const content = blockValue.properties.title[0][0];
           const language = blockValue.properties.language[0][0];
           return (
@@ -326,7 +346,7 @@ export const Block: React.FC<Block> = props => {
         if (!blockValue.properties) return null;
         return (
           <blockquote className="notion-quote">
-            {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title, blockMap)}
           </blockquote>
         );
       case "collection_view":
@@ -337,7 +357,7 @@ export const Block: React.FC<Block> = props => {
         return (
           <div>
             <h3 className="notion-h3">
-              {renderChildText(block.collection?.title!)}
+              {renderChildText(block.collection?.title!, blockMap)}
             </h3>
 
             {collectionView?.type === "table" && (
@@ -376,7 +396,8 @@ export const Block: React.FC<Block> = props => {
                                 renderChildText(
                                   row[
                                     block.collection?.schema[gp.property]?.name!
-                                  ]
+                                  ],
+                                  blockMap
                                 )!
                               }
                             </td>
@@ -430,7 +451,7 @@ export const Block: React.FC<Block> = props => {
               <PageIcon block={block} mapImageUrl={mapImageUrl} />
             </div>
             <div className="notion-callout-text">
-              {renderChildText(blockValue.properties.title)}
+              {renderChildText(blockValue.properties.title, blockMap)}
             </div>
           </div>
         );
@@ -455,11 +476,11 @@ export const Block: React.FC<Block> = props => {
             >
               <div>
                 <div className="notion-bookmark-title">
-                  {renderChildText(title)}
+                  {renderChildText(title, blockMap)}
                 </div>
                 {description && (
                   <div className="notion-bookmark-description">
-                    {renderChildText(description)}
+                    {renderChildText(description, blockMap)}
                   </div>
                 )}
 
@@ -467,7 +488,7 @@ export const Block: React.FC<Block> = props => {
                   {bookmark_icon && (
                     <img src={bookmark_icon} alt={getTextContent(title)} />
                   )}
-                  <div>{renderChildText(link)}</div>
+                  <div>{renderChildText(link, blockMap)}</div>
                 </div>
               </div>
               {bookmark_cover && (
@@ -481,7 +502,9 @@ export const Block: React.FC<Block> = props => {
       case "toggle":
         return (
           <details className="notion-toggle">
-            <summary>{renderChildText(blockValue.properties.title)}</summary>
+            <summary>
+              {renderChildText(blockValue.properties.title, blockMap)}
+            </summary>
             <div>{children}</div>
           </details>
         );
