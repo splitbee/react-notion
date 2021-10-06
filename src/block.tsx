@@ -236,13 +236,23 @@ export const Block: React.FC<Block> = props => {
         );
       case "bulleted_list":
       case "numbered_list":
+      case "to_do":
+        const todo = blockValue.type === "to_do";
+
         const wrapList = (content: React.ReactNode, start?: number) =>
-          blockValue.type === "bulleted_list" ? (
-            <ul className="notion-list notion-list-disc">{content}</ul>
-          ) : (
+          blockValue.type === "numbered_list" ? (
             <ol start={start} className="notion-list notion-list-numbered">
               {content}
             </ol>
+          ) : (
+            <ul
+              className={classNames(
+                "notion-list",
+                todo ? "notion-list-todo" : "notion-list-disc"
+              )}
+            >
+              {content}
+            </ul>
           );
 
         let output: JSX.Element | null = null;
@@ -251,14 +261,22 @@ export const Block: React.FC<Block> = props => {
           output = (
             <>
               {blockValue.properties && (
-                <li>{renderChildText(blockValue.properties.title)}</li>
+                <li>
+                  {todo && (
+                    <div className="notion-checkbox notion-checkbox-off" />
+                  )}
+                  {renderChildText(blockValue.properties.title)}
+                </li>
               )}
               {wrapList(children)}
             </>
           );
         } else {
           output = blockValue.properties ? (
-            <li>{renderChildText(blockValue.properties.title)}</li>
+            <li>
+              {todo && <div className="notion-checkbox notion-checkbox-on" />}
+              {renderChildText(blockValue.properties.title)}
+            </li>
           ) : null;
         }
 
