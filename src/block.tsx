@@ -267,7 +267,37 @@ export const Block: React.FC<Block> = props => {
         const start = getListNumber(blockValue.id, blockMap);
 
         return isTopLevel ? wrapList(output, start) : output;
+      case "to_do":
+        /**
+         * There are only 3 possible cases when no nested to_dos:
+         * 1. properties: {title: [["test"]], checked: [["No"]]}
+         * 2. properties: {title: [["test"]], checked: [["Yes"]]}
+         * 3. properties: {title: [["test"]]}
+         */
+        const checkbox = block.value.properties;
+        const { id } = block.value;
 
+        // remove other styles in to-do.
+        const label: string = checkbox?.title
+          .flat(1) // only flatten the first level
+          .filter((ele: string | Array<string>) => typeof ele === "string")
+          .join("");
+
+        const isChecked =
+          checkbox?.checked && checkbox?.checked[0][0] === "Yes";
+
+        return (
+          <div>
+            <input
+              className="notion-checkbox"
+              type="checkbox"
+              name=""
+              id={id}
+              checked={isChecked}
+            />
+            <label htmlFor={id}>{label}</label>
+          </div>
+        );
       case "image":
       case "embed":
       case "figma":

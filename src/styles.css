@@ -313,6 +313,10 @@ img.notion-page-icon {
   padding-left: 0px;
 }
 
+.notion-checkbox {
+  accent-color: #eb5757;
+}
+
 .notion-asset-wrapper {
   margin: 0.5rem auto 0.5rem;
   max-width: 100%;
