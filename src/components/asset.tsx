@@ -35,7 +35,7 @@ const Asset: React.FC<{
         <iframe
           className="notion-image-inset"
           src={
-            type === "figma" ? value.properties.source[0][0] : display_source
+            value.properties.source[0][0]
           }
         />
       </div>
