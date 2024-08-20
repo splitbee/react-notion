@@ -45,6 +45,7 @@ const Asset: React.FC<{
   if (block.value.type === "image") {
     const src = mapImageUrl(value.properties.source[0][0], block);
     const caption = value.properties.caption?.[0][0];
+    const altText = value.properties.alt_text?.[0][0];
 
     if (block_aspect_ratio) {
       return (
@@ -56,7 +57,7 @@ const Asset: React.FC<{
         >
           <img
             className="notion-image-inset"
-            alt={caption || "notion image"}
+            alt={altText || caption || "notion image"}
             src={src}
           />
         </div>

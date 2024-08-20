@@ -197,6 +197,7 @@ export interface ContentValueType extends BaseValueType {
   properties: {
     source: string[][];
     caption?: DecorationType[];
+    alt_text?: string[][];
   };
   format?: {
     block_width: number;
